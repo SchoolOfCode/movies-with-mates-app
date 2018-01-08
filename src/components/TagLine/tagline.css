@@ -1,0 +1,15 @@
+.lastWord{
+  animation: fade-in 6s 0s infinite forwards ;
+}
+
+@keyframes  fade-in {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

@@ -1,0 +1,17 @@
+/*style={{marginTop: "30px", textAlign: "center"}}*/
+
+.showings {
+  position: relative;
+
+}
+
+.filmName {
+  position: relative;
+  /*text-align: left;*/
+  margin-top: 30px; 
+}
+
+.showingTimes {
+  position: relative;
+  left: 0;
+}

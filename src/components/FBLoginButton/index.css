@@ -1,0 +1,10 @@
+.fbLoginButton {
+  text-transform: capitalize;
+  background-color: #4267b2;
+  color: white;
+  height: 50px;
+  margin: 10px auto 5px;
+  width: 55vw;
+  border-radius: 3px;
+  font-size: 120%;
+}

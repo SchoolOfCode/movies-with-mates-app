@@ -1,0 +1,67 @@
+
+
+
+@media screen and (min-width: 360px) and (max-height: 740px) {
+  .background {
+     position: fixed;
+     top: 5vh;
+     left: -73%;
+     height: 100%;
+     overflow: hidden;
+  }
+
+  .tagLine {
+    position: relative;
+    top: 35vh;
+  }
+
+  .loginButtons {
+    position: relative;
+    top: 40vh;
+  }
+}
+
+@media screen and (min-width: 375px) and (max-height: 750px) {
+  .background {
+     position: fixed;
+     top: 5vh;
+     left: -73%;
+     height: 100%;
+     overflow: hidden;
+   }
+
+   .tagLine {
+     position: relative;
+     top: 35vh;
+   }
+
+   .loginButtons {
+     position: relative;
+     top: 40vh;
+   }
+}
+
+@media screen and (min-width: 375px) and (min-height: 800px) and (max-height: 850px) {
+  .background {
+     position: fixed;
+     top: 5vh;
+     left: -102%;
+     height: 100%;
+     overflow: hidden;
+   }
+
+   .mwmLogo {
+     position: relative;
+     top: 3vh;
+   }
+
+  .tagLine {
+    position: relative;
+    top: 40vh;
+  }
+
+  .loginButtons {
+    position: relative;
+    top: 48vh;
+  }
+}

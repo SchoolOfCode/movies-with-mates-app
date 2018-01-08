@@ -1,0 +1,68 @@
+#ticket {
+  color: white;
+  height: 28vh;
+  background-image: url("./ticket-v5.svg");
+  background-repeat: no-repeat;
+  position: relative;
+  margin-top: 5vh;
+}
+
+#info {
+  position: absolute;
+  top: 10%;
+  left: 37%;
+  color: white;
+  /* font-size: 1.32em; */
+  line-height: 1.5;
+  text-align: left;
+  width: 51vw;
+}
+#img {
+  position: absolute;
+  width: 20%;
+  top: 15%;
+  left: 10%;
+  border-radius: 100%;
+}
+
+#name {
+  position: absolute;
+  top: 60%;
+  left: 10%;
+  color: white;
+}
+
+@media screen and (min-width: 800px) {
+  #ticket {
+    height: 30vh;
+    width: 30vw;
+    background-image: url("./ticket-v5.svg");
+    background-repeat: no-repeat;
+  }
+
+  #information {
+    position: absolute;
+    top: 10%;
+    left: 40%;
+    color: white;
+    line-height: 1.5;
+    font-size: 1.5em;
+    text-align: left;
+    width: 50%;
+  }
+
+  #img {
+    position: absolute;
+    width: 20%;
+    top: 15%;
+    left: 10%;
+    border-radius: 100%;
+  }
+
+  #name {
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    color: white;
+  }
+}
