@@ -186,19 +186,7 @@ class CommentsPage extends Component {
     return this.props.film ? (
       <div style={{ paddingTop: "18%" }}>
         <AppBar url="/movies" title={this.props.film.movie} />
-        <BackButton />
-        <i
-          style={{ color: "red", float: "right" }}
-          class="fa fa-times fa-2x"
-          onClick={this.handleNotAttending}
-          aria-hidden="true"
-        />
-        <i
-          style={{ color: "green", float: "right" }}
-          onClick={this.handleAttending}
-          class="fa fa-check fa-2x"
-          aria-hidden="true"
-        />
+        <BackButton style={{height:"25px", width:"25px", position:"absolute", top:"15px", left:"20px", zIndex:"101"}} />
         <br />
         <Ticket
           cinema={this.props.film.cinema}
