@@ -101,6 +101,7 @@ class MoviePage extends Component {
   }
 
   render() {
+    console.log("MOVIE PAGE STATE", this.state);
     if (this.state.needsToLogIn) {
       return <LoginPage />;
     }
