@@ -58,7 +58,7 @@ const Movies = props => {
 							props.handleSearch();
 						}
 					}}
-					floatingLabelText={<SearchIcon />}
+					// floatingLabelText={<SearchIcon />}
 					hintText="e.g. Gone With The Wind"
 					onChange={props.textFieldOnChange}
 					underlineFocusStyle={otherStyle.underlineStyle}

@@ -10,12 +10,12 @@ const ShowComment = props => {
 			className="container"
 			style={{
 				overflow: 'scroll',
-				height: '50vh',
+				height: '34vh',
 				width: '100%',
 				paddingBottom: '2%'
 			}}
 		>
-			<div style={{ height: '5vh' }} />
+			<div style={{ height: '0vh' }} />
 			{props.comments.map((comment, idx) => (
 				<div
 					className="chatInfo"
@@ -27,7 +27,7 @@ const ShowComment = props => {
 				>
 					<div
 						className="userInfo"
-						style={{ height: '17vh', width: '93vw', marginRight: 0 }}
+						style={{ height: '16vh', width: '93vw', marginRight: 0 }}
 					>
 						<Avatar
 							className="avatar"
@@ -48,7 +48,8 @@ const ShowComment = props => {
 								textAlign: 'left',
 								top: '-70px',
 								left: '75px',
-								fontWeight: 'bold'
+								fontWeight: 'bold',
+								width: '50vw'
 							}}
 						>
 							{comment.displayName}

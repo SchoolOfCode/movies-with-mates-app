@@ -185,8 +185,8 @@ class CommentsPage extends Component {
     //
     return this.props.film ? (
       <div style={{ paddingTop: "18%" }}>
-        <AppBar url="/movies" title={this.props.film.movie} />
         <BackButton style={{height:"25px", width:"25px", position:"absolute", top:"15px", left:"20px", zIndex:"101"}} />
+        <AppBar url="/movies" title={this.props.film.movie} />
         <br />
         <Ticket
           cinema={this.props.film.cinema}
@@ -238,7 +238,7 @@ class CommentsPage extends Component {
                 color: "green",
                 position: "relative",
                 display: "inline",
-                left: "8%",
+                left: "11%",
                 top: "3px"
               }}
               onClick={this.handleAttending}
@@ -247,7 +247,7 @@ class CommentsPage extends Component {
             />
           </div>
           <br />
-          <div className="attendingUsers" style={{ height: "6vh" }}>
+          <div className="attendingUsers" style={{ position:"relative", left: "4%", width: "40%", height: "6vh", overflow: "auto" }}>
             {this.state.attendees.map((user, idx) => (
               <img
                 src={user.fb.picture}
@@ -255,8 +255,9 @@ class CommentsPage extends Component {
                   borderRadius: "100%",
                   height: "5vh",
                   position: "relative",
-                  display: "inline",
-                  left: "-30%"
+                  // display: "inline",
+                  marginRight: "2%"
+                  // left: "-38%"
                 }}
                 key={idx}
               />
