@@ -90,7 +90,8 @@ const Movies = props => {
 				}}
 			>
 				<div className="pageInfo">
-					<h3 style={{ marginBottom: '3vh' }}> Movie Events </h3>
+					<h3 style={{ marginBottom: '3vh', fontSize:"3.5em" }}> Movie Events </h3>
+					<h3 style={{ fontSize:"1.5em" }}> Scroll to find a movie that suits you... </h3>
 				</div>
 				<div id="container">
 					{props.films &&

@@ -26,7 +26,7 @@ class GoingPage extends Component {
     return (
       <div style={{ paddingTop: "20%", paddingBottom: "20%" }}>
         <AppBar title="Going" />
-        <h2>You have clicked attending on the following movies...</h2>
+        <h2>Films you're planning on seeing...</h2>
         <div id="bigDiv">
           {this.state.going.map((film, idx) => (
             <Link

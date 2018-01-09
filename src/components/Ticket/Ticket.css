@@ -20,15 +20,15 @@
 #img {
   position: absolute;
   width: 20%;
-  top: 15%;
+  top: 25%;
   left: 10%;
   border-radius: 100%;
 }
 
 #name {
   position: absolute;
-  top: 60%;
-  left: 10%;
+  top: 70%;
+  left: 12%;
   color: white;
   font-size: 1.30em;
 }

@@ -4,6 +4,8 @@ import SearchBar from "material-ui-search-bar";
 import TextField from "material-ui/TextField";
 import { Route, Switch, Link } from "react-router-dom";
 
+import CircularProgress from 'material-ui/CircularProgress';
+
 import Movies from "../Movies";
 import CommentsPage from "../CommentsPage";
 import AppBar from "../AppBar";
@@ -106,7 +108,9 @@ class MoviePage extends Component {
       return <LoginPage />;
     }
     if (this.state.loading) {
-      return <div>no no no</div>;
+      return <div>
+        <CircularProgress size={50} color={"red"} thickness={10} />
+      </div>;
     }
     return (
       <div>
