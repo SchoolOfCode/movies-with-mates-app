@@ -5,10 +5,6 @@ import AppBar from "../AppBar";
 import AddComment from "../AddComment";
 import ShowComment from "../ShowComment";
 import BackButton from "../BackButton";
-import Clock from "../Clock";
-import Location from "../Location";
-import MovieLogo from "../MovieLogo";
-import Calendar from "../Calendar";
 
 import createBrowserHistory from "history/createBrowserHistory";
 
@@ -190,6 +186,7 @@ class CommentsPage extends Component {
     return this.props.film ? (
       <div style={{ paddingTop: "18%" }}>
         <AppBar url="/movies" title={this.props.film.movie} />
+        <BackButton />
         <i
           style={{ color: "red", float: "right" }}
           class="fa fa-times fa-2x"
