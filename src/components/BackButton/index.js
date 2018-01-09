@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class BackButton extends Component {
   render() {
-    return (<img onClick={() => this.props.history.replace("/movies")} style={this.props.style} src={"/back-button-white.svg"}/>)
+    return (<Link to={"/movies"}> <img style={this.props.style} src={"/back-button-white.svg"}/> </Link>)
   }
 }
 export default BackButton;
