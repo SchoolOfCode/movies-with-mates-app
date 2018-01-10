@@ -185,7 +185,18 @@ class CommentsPage extends Component {
     //
     return this.props.film ? (
       <div style={{ paddingTop: "18%" }}>
-        <BackButton style={{height:"25px", width:"25px", position:"absolute", top:"15px", left:"20px", zIndex:"101"}} />
+        <BackButton
+          style={{
+            height: "25px",
+            width: "25px",
+            position: "absolute",
+            top: "15px",
+            left: "20px",
+            zIndex: "101"
+          }}
+          url="/movies"
+          history={this.props.history}
+        />
         <AppBar url="/movies" title={this.props.film.movie} />
         <br />
         <Ticket
@@ -247,7 +258,16 @@ class CommentsPage extends Component {
             />
           </div>
           <br />
-          <div className="attendingUsers" style={{ position:"relative", left: "4%", width: "40%", height: "6vh", overflow: "auto" }}>
+          <div
+            className="attendingUsers"
+            style={{
+              position: "relative",
+              left: "4%",
+              width: "40%",
+              height: "6vh",
+              overflow: "auto"
+            }}
+          >
             {this.state.attendees.map((user, idx) => (
               <img
                 src={user.fb.picture}
