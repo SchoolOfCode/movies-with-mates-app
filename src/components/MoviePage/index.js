@@ -4,7 +4,7 @@ import SearchBar from "material-ui-search-bar";
 import TextField from "material-ui/TextField";
 import { Route, Switch, Link } from "react-router-dom";
 
-import CircularProgress from 'material-ui/CircularProgress';
+import CircularProgress from "material-ui/CircularProgress";
 
 import Movies from "../Movies";
 import CommentsPage from "../CommentsPage";
@@ -92,8 +92,11 @@ class MoviePage extends Component {
     return;
     // return arr[arr.map(filmInfo => filmInfo.movie).indexOf(film)]._id;
   }
-  filmFinder(film) {
-    const found = this.state.films.filter(f => f.movie === film);
+  eventFinderById(eventId) {
+    const found = this.state.films.filter(f => f._id === eventId);
+    console.log("STATE OF MOVIE PAGE", this.state);
+    console.log("EVENT ID", eventId);
+    console.log("FILM FOUND", found[0]);
     return found[0];
     // return arr[arr.map(filmInfo => filmInfo.movie).indexOf(film)]._id;
   }
@@ -108,9 +111,11 @@ class MoviePage extends Component {
       return <LoginPage />;
     }
     if (this.state.loading) {
-      return <div>
-        <CircularProgress size={50} color={"red"} thickness={10} />
-      </div>;
+      return (
+        <div>
+          <CircularProgress size={50} color={"red"} thickness={10} />
+        </div>
+      );
     }
     return (
       <div>
@@ -133,13 +138,16 @@ class MoviePage extends Component {
         />
         <Route
           exact
-          path={`${this.props.match.url}/:film`}
-          component={props => (
-            <CommentsPage
-              film={this.filmFinder(props.match.params.film)}
-              {...props}
-            />
-          )}
+          path={`${this.props.match.url}/:filmId`}
+          render={props => {
+            console.log("PARAMS", props.match);
+            return (
+              <CommentsPage
+                film={this.eventFinderById(props.match.params.filmId)}
+                {...props}
+              />
+            );
+          }}
         />
       </div>
     );

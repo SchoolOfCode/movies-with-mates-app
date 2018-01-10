@@ -7,53 +7,88 @@ import AppBar from "../AppBar";
 import NavBar from "../NavBar";
 
 const dateStamp = mongooseTimestamp =>
+  `${mongooseTimestamp.slice(0, mongooseTimestamp.indexOf("T"))}`;
+
+const timeStamp = mongooseTimestamp =>
   `${mongooseTimestamp.slice(
     0,
     mongooseTimestamp.indexOf("T")
+  )} ${mongooseTimestamp.slice(
+    mongooseTimestamp.indexOf("T") + 1,
+    mongooseTimestamp.lastIndexOf(":")
   )}`;
-
 
 class ActivityPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activity: []
+      theirs: [],
+      going: []
     };
   }
 
   componentDidMount() {
-    fetch(`/api/movies/activity/hack?user=${localStorage.getItem("userId")}`)
+    fetch(`/api/movies/thing/${localStorage.getItem("userId")}`)
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        console.log("DATA FROM FETCH", data);
+
+        let theirs = data.comments.filter(c =>
+          data.theirEvents.includes(c.movie)
+        );
+
+        console.log("THEIRS ARRAY ", theirs);
+
+        let going = data.comments.filter(c => data.going.includes(c.movie));
+
+        console.log("GOING ARRAY", going);
+
         this.setState({
-          activity: [...data.films]
+          theirs: [...theirs.slice(0, 3)],
+          going: [...going.slice(0, 3)]
         });
       })
+      .then(() => console.log(this.state))
       .catch(err => console.log(err));
   }
+
   render() {
     return (
-      <div style={{ paddingBottom: "20%" }}>
-        <AppBar url="/profile" title="Activity" />
-        <h3 style={{ margin: 0, paddingTop: "20%", paddingBottom: 20, fontSize: "3.5em" }}> Films you're interested in...</h3>
-        <div id="container">
-          {this.state.activity.map((activity, idx) => (
+      <div>
+        <AppBar title="Activity Feed" />
+        <div style={{ paddingBottom: "20%" }} />
+        {this.state.going.map(c => {
+          return (
             <Link
-              to={`${this.props.match.url}/${activity.movie}`}
-              style={{ textDecoration: "none" }}
+              to={{
+                pathname: `/movies/${c.movie}`,
+                state: { prevPath: this.props.location.pathname }
+              }}
             >
-              <Ticket
-                index={idx}
-                cinema={activity.cinema}
-                movie={activity.movie}
-                time={activity.time}
-                date={dateStamp(activity.date)}
-                user={activity.user}
-              />
+              <div>
+                <img src={c.picture} />
+                {c.displayName} commented on a film you're going to
+                {timeStamp(c.createdAt)}
+              </div>
             </Link>
-          ))}
-        </div>
+          );
+        })}
+        {this.state.theirs.map(c => {
+          return (
+            <Link
+              to={{
+                pathname: `/movies/${c.movie}`,
+                state: { prevPath: this.props.location.pathname }
+              }}
+            >
+              <div>
+                <img src={c.picture} />
+                {c.displayName} commented on a film you posted
+                {timeStamp(c.createdAt)}
+              </div>
+            </Link>
+          );
+        })}
       </div>
     );
   }
