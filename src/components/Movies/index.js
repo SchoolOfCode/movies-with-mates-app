@@ -49,7 +49,8 @@ const Movies = props => {
             position: "relative",
             display: "inline",
             height: "4vh",
-            marginLeft: "3.5vw"
+            marginLeft: "3.5vw",
+						top: "-25px"
           }}
         />
         <TextField
@@ -77,8 +78,8 @@ const Movies = props => {
           style={{
             position: "relative",
             display: "inline",
-            // width: "5%",
-            height: "3.5vh"
+            height: "3.5vh",
+						top: "-25px"
           }}
         />
       </div>
