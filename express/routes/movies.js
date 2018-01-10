@@ -259,4 +259,45 @@ router.delete("/:id/comments/:cid", (req, res, next) => {
   });
 });
 
+router.get("/thing/:id", (req, res) => {
+  Movie.find({ "user.id": req.params.id }, (err, movies) => {
+    if (err) {
+      res.json({ err });
+    }
+    const arr1 = movies.map(film => film._id);
+    Comments.find({ user: req.params.id }, (errr, comments) => {
+      if (errr) {
+        res.json(errr);
+      }
+      const arr2 = comments.map(c => c.movie);
+      Movie.find({ members: req.params.id }, (errrUpinHere, movies) => {
+        if (errrUpinHere) {
+          res.json({ errrUpinHere });
+        }
+        const arr3 = movies.map(f => f._id);
+
+        console.log("arr1", arr1);
+        console.log("arr2", arr2);
+        console.log("arr3", arr3);
+
+        Comments.find({
+          $or: [
+            { movie: { $in: arr1 } },
+            { movie: { $in: arr2 } },
+            { movie: { $in: arr3 } }
+          ]
+        })
+          .sort({ updatedAt: -1 })
+          .exec((error, comments) => {
+            if (error) {
+              return res.json(error);
+            }
+            let noUser = comments.filter(c => c.user !== req.params.id);
+            res.json({ comments: noUser });
+          });
+      });
+    });
+  });
+});
+
 module.exports = router;
