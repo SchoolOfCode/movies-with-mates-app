@@ -270,11 +270,11 @@ router.get("/thing/:id", (req, res) => {
         res.json(errr);
       }
       const arr2 = comments.map(c => c.movie);
-      Movie.find({ members: req.params.id }, (errrUpinHere, movies) => {
+      Movie.find({ members: req.params.id }, (errrUpinHere, movies2) => {
         if (errrUpinHere) {
           res.json({ errrUpinHere });
         }
-        const arr3 = movies.map(f => f._id);
+        const arr3 = movies2.map(f => f._id);
 
         console.log("arr1", arr1);
         console.log("arr2", arr2);
@@ -293,7 +293,14 @@ router.get("/thing/:id", (req, res) => {
               return res.json(error);
             }
             let noUser = comments.filter(c => c.user !== req.params.id);
-            res.json({ comments: noUser });
+            res.json({
+              comments: noUser,
+              theirEvents: arr1,
+              commentedEvents: arr2,
+              going: arr3,
+              postedMovies: movies,
+              goingMovies: movies2
+            });
           });
       });
     });
