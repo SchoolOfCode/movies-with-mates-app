@@ -27,7 +27,8 @@ let otherStyle = {
 		color: '#FFFFFF'
 	},
 	hint: {
-		color: '#FFFFFF'
+		color: '#FFFFFF',
+		fontSize: '0.9em'
 	}
 };
 
@@ -40,7 +41,7 @@ const Movies = props => {
 		<div className="pageContainer">
 			<div
 				className="searchContainer"
-				style={{ position: 'fixed', height: '10vh', zIndex: 101 }}
+				style={{ position: 'fixed', height: '8vh', width: '100vw', zIndex: 101 }}
 			>
 				<img
 					src="search.svg"
@@ -48,7 +49,8 @@ const Movies = props => {
 						position: 'relative',
 						display: 'inline',
 						height: '4vh',
-						marginLeft: '3.5vw'
+						top: '-25px'
+						// marginLeft: '3.5vw'
 					}}
 				/>
 				<TextField
@@ -58,16 +60,18 @@ const Movies = props => {
 							props.handleSearch();
 						}
 					}}
-					// floatingLabelText={<SearchIcon />}
+					floatingLabelText="Search for what's on"
+					floatingLabelStyle={{color: "white", fontFamily: "Ubuntu, sans-serif", fontSize: '0.9em'}}
+					floatingLabelShrinkStyle={{color:"#DD585D"}}
 					hintText="e.g. Gone With The Wind"
 					onChange={props.textFieldOnChange}
 					underlineFocusStyle={otherStyle.underlineStyle}
 					underlineStyle={otherStyle.underlineStyle}
 					value={props.textFieldValue}
-					hintText="Search for what's on"
+					// hintText="Search for what's on"
 					hintStyle={otherStyle.hint}
-					inputStyle={{ color: 'white' }}
-					style={{ width: '74vw', marginLeft: '2vw', marginRight: '2vw' }}
+					inputStyle={{ color: 'white', fontSize: '0.9em' }}
+					style={{ width: '74vw', marginLeft: '2vw', marginRight: '2vw', top: '-25px' }}
 				/>
 				<img
 					onClick={() => props.history.replace('/create')}
@@ -76,7 +80,8 @@ const Movies = props => {
 						position: 'relative',
 						display: 'inline',
 						// width: "5%",
-						height: '3.5vh'
+						height: '3.5vh',
+						top: '-25px'
 					}}
 				/>
 			</div>

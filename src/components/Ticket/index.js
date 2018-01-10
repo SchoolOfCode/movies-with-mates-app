@@ -16,27 +16,38 @@ const Ticket = props => (
 				<p style={{ position:"relative", top: "0", margin: "0 auto", textAlign: "center", textDecoration:"none"}} id="name">{props.user.name}</p>
 			</div>
 			<div id="info" style={{ top:"30px", left: '37%', fontSize: '1.32em', width: '51vw' }}>
-				<div style={{position:"relative", height: "5vh", top: 0}}>
-				<LocationIcon style={{ position:"relative", color: "white", top: "-11px", height: "22px", padding: "2px"}}/>
-					<p style={{ position:"relative", display: "inline-block", margin: "0", width: "80%", top: "0", height: "100%", verticalAlign: "text-bottom"}}>
+				<div style={{position:"relative", height: "4.5vh", top: 0}}>
+				<LocationIcon style={{ position:"relative", color: "white", top: "7px", height: "22px", padding: "2px"}}/>
+					<p style={{ position:"relative", display: "inline-block", margin: "0", width: "80%", top: "0", height: "50%", verticalAlign: "text-bottom"}}>
 						{props.cinema}
 					</p>
 				</div>
-				<div style={{position:"relative", height: "6vh"}}>
-					<MovieIcon style={{ position:"relative", top:"-18px",color:"white", height:"22px", padding: "2px"}}/>
-						<div style={{ position:"relative", display: "inline-block", margin: "0", width: "80%", height:"100%", verticalAlign: "text-bottom"}}>
+				<div style={{position:"relative", height: "4.5vh"}}>
+					<MovieIcon style={{ position:"relative", top:"7px", color:"white", height:"22px", padding: "2px"}}/>
+						<div style={{
+							position:"relative",
+							display: "inline-block",
+							top: "3px",
+							margin: "0",
+							width: "80%",
+							height:"60%",
+							verticalAlign: "text-bottom",
+							overflow: "hidden",
+							textOverflow: "ellipsis",
+							whiteSpace:"nowrap"
+						}}>
 							{props.movie}
 						</div>
 				</div>
-				<div style={{position:"relative", height: "5vh"}}>
-					<DateIcon style={{ position:"relative", top:"-11px",color:"white", height:"22px", padding:"2px"}}/>
-						<p style={{ position:"relative", display: "inline-block", margin: "0", width: "80%", height:"100%", verticalAlign: "text-bottom"}}>
+				<div style={{position:"relative", height: "4.5vh"}}>
+					<DateIcon style={{ position:"relative", top:"7px", color:"white", height:"22px", padding:"2px"}}/>
+						<p style={{ position:"relative", display: "inline-block", margin: "0", width: "80%", height:"50%", verticalAlign: "text-bottom"}}>
 							{props.date}
 						</p>
 				</div>
-				<div style={{position:"relative", height: "5vh"}}>
-					<ClockIcon style={{ position:"relative", top:"-11px",color:"white", height:"22px", padding:"2px"}}/>
-					<p style={{ position:"relative", display: "inline-block", margin: "0", width: "80%", height:"100%", verticalAlign: "text-bottom"}}>
+				<div style={{position:"relative", height: "4.5vh"}}>
+					<ClockIcon style={{ position:"relative", top:"7px",color:"white", height:"22px", padding:"2px"}}/>
+					<p style={{ position:"relative", display: "inline-block", margin: "0", width: "80%", height:"50%", verticalAlign: "text-bottom"}}>
 						{props.time}
 					</p>
 				</div>
