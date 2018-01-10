@@ -110,6 +110,7 @@ router.get("/:id/join", (req, res, next) => {
     if (err) {
       return res.json({ error: err });
     }
+    console.log("join ", movie)
     User.find(
       {
         _id: { $in: movie.members }
@@ -170,6 +171,8 @@ router.post("/", (req, res) => {
     if (err) {
       return res.json({ error: err });
     }
+    movie.members.push(req.body.user.id);
+    console.log(movie.members);
     res.json({ message: "Film event" });
   });
 });

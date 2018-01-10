@@ -79,8 +79,8 @@ class CommentsPage extends Component {
   }
 
   getIntervals() {
-    this.interval1 = setInterval(()=> this.getComments(), 2000)
-    this.interval2 = setInterval(()=> this.getAttendees(),2000)
+    this.interval1 = setInterval(()=> this.getComments(), 200000)
+    this.interval2 = setInterval(()=> this.getAttendees(),200000)
   }
 
   getLogInPage(){

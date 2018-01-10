@@ -124,7 +124,8 @@ class PostAMovie extends Component {
         ...{
           user: {
             picture: localStorage.getItem("picture"),
-            name: localStorage.getItem("displayName")
+            name: localStorage.getItem("displayName"),
+            id: localStorage.getItem("userId")
           }
         }
       })
