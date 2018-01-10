@@ -16,7 +16,7 @@ const PostMovieTicket = props => {
         <p
           style={{
             position: "relative",
-            top: 30,
+            top: 24,
             left: 140,
             color: "white",
             fontSize: "2em",
