@@ -54,24 +54,23 @@ router.get("/", (req, res, next) => {
       now.getMonth(),
       now.getDate()
     );
-    Movie.find(
-      {
-        $and: [
-          { members: req.query.user },
-          {
-            date: {
-              $gte: startOfToday
-            }
+    Movie.find({
+      $and: [
+        { members: req.query.user },
+        {
+          date: {
+            $gte: startOfToday
           }
-        ]
-      },
-      (err, movies) => {
+        }
+      ]
+    })
+      .sort({ date: 1 })
+      .exec((err, movies) => {
         if (err) {
           res.json({ error: err });
         }
         res.json({ going: movies });
-      }
-    );
+      });
   } else {
     let yesterday = new Date().getDate() - 1;
     var now = new Date();
@@ -80,19 +79,18 @@ router.get("/", (req, res, next) => {
       now.getMonth(),
       now.getDate()
     );
-    Movie.find(
-      {
-        date: {
-          $gte: startOfToday
-        }
-      },
-      (err, movies) => {
+    Movie.find({
+      date: {
+        $gte: startOfToday
+      }
+    })
+      .sort({ date: 1 })
+      .exec((err, movies) => {
         if (err) {
           res.json({ Error: err });
         }
         res.json({ payload: movies });
-      }
-    );
+      });
   }
 });
 
