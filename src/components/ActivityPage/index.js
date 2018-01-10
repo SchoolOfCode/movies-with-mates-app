@@ -36,7 +36,7 @@ class ActivityPage extends Component {
     return (
       <div style={{ paddingBottom: "20%" }}>
         <AppBar url="/profile" title="Activity" />
-        <h2 style={{ margin: 0, paddingTop: "20%", paddingBottom: 20 }}> Films you're interested in...</h2>
+        <h3 style={{ margin: 0, paddingTop: "20%", paddingBottom: 20, fontSize: "3.5em" }}> Films you're interested in...</h3>
         <div id="container">
           {this.state.activity.map((activity, idx) => (
             <Link

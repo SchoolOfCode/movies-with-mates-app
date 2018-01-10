@@ -14,7 +14,7 @@ const AppBar = props => {
       }}
     >
       <br />
-      <h3 style={{ width: "75vw", height: "4vh", margin: "0 auto", color: "white", overflow: "auto" }}>{props.title}</h3>
+      <h3 style={{ width: "75vw", height: "4vh", margin: "0 auto", color: "white", overflow: "auto", backgroundColor: "#DD585D" }}>{props.title}</h3>
       {/* <img
         onClick={() => window.location.replace("/profile")}
         src="/profile.svg"
