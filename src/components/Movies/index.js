@@ -10,25 +10,26 @@ import { Grid, Row, Col } from "react-bootstrap";
 import "./Movies.css";
 
 let otherStyle = {
-  // lineHeight: "36px",
-  // width: "75%",
-  // height: "7%",
-  // marginTop: 50,
-  errorStyle: {
-    color: "#F94548"
-  },
-  underlineStyle: {
-    borderColor: "#FFFFFF"
-  },
-  floatingLabelStyle: {
-    color: "#F94548"
-  },
-  floatingLabelFocusStyle: {
-    color: "#FFFFFF"
-  },
-  hint: {
-    color: "#FFFFFF"
-  }
+	// lineHeight: "36px",
+	// width: "75%",
+	// height: "7%",
+	// marginTop: 50,
+	errorStyle: {
+		color: '#F94548'
+	},
+	underlineStyle: {
+		borderColor: '#FFFFFF'
+	},
+	floatingLabelStyle: {
+		color: '#F94548'
+	},
+	floatingLabelFocusStyle: {
+		color: '#FFFFFF'
+	},
+	hint: {
+		color: '#FFFFFF',
+		fontSize: '0.9em'
+	}
 };
 
 const dateStamp = mongooseTimestamp =>
@@ -52,23 +53,24 @@ const Movies = props => {
           }}
         />
         <TextField
-          onKeyPress={e => {
-            if (e.key === "Enter") {
-              console.log("Enter key pressed");
-              props.handleSearch();
-            }
-          }}
-          // floatingLabelText={<SearchIcon />}
-          hintText="e.g. Gone With The Wind"
-          onChange={props.textFieldOnChange}
-          underlineFocusStyle={otherStyle.underlineStyle}
-          underlineStyle={otherStyle.underlineStyle}
-          value={props.textFieldValue}
-          hintText="Search for what's on"
-          hintStyle={otherStyle.hint}
-          inputStyle={{ color: "white" }}
-          style={{ width: "74vw", marginLeft: "2vw", marginRight: "2vw" }}
-        />
+					onKeyPress={e => {
+						if (e.key === 'Enter') {
+							console.log('Enter key pressed');
+							props.handleSearch();
+						}
+					}}
+					floatingLabelText="Search for what's on"
+					floatingLabelStyle={{color: "white", fontFamily: "Ubuntu, sans-serif", fontSize: '0.9em'}}
+					floatingLabelShrinkStyle={{color:"#DD585D"}}
+					hintText="e.g. Gone With The Wind"
+					onChange={props.textFieldOnChange}
+					underlineFocusStyle={otherStyle.underlineStyle}
+					underlineStyle={otherStyle.underlineStyle}
+					value={props.textFieldValue}
+					hintStyle={otherStyle.hint}
+					inputStyle={{ color: 'white', fontSize: '0.9em' }}
+					style={{ width: '74vw', marginLeft: '2vw', marginRight: '2vw', top: '-25px' }}
+				/>
         <img
           onClick={() => props.history.replace("/create")}
           src="/plus-button-white.svg"

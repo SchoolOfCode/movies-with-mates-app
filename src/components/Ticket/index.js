@@ -8,6 +8,7 @@ import DateIcon from "material-ui/svg-icons/action/date-range";
 import "./Ticket.css";
 
 const Ticket = props => (
+
   <div id="ticket" style={{ margin: 0 }}>
     <img
       style={{ position: "relative", left: "-30%", top: "6vh" }}
