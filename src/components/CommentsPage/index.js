@@ -5,10 +5,15 @@ import AppBar from "../AppBar";
 import AddComment from "../AddComment";
 import ShowComment from "../ShowComment";
 import BackButton from "../BackButton";
+import LoginPage from "../LoginPage";
 
-import createBrowserHistory from "history/createBrowserHistory";
-
-const history = createBrowserHistory();
+const tokenChecker = () => {
+  return localStorage.getItem("localToken") ||
+    localStorage.getItem("accessToken") ||
+    localStorage.getItem("email")
+    ? true
+    : false;
+};
 
 const timeStamp = mongooseTimestamp =>
   `${mongooseTimestamp.slice(
@@ -22,24 +27,24 @@ const timeStamp = mongooseTimestamp =>
 const dateStamp = mongooseTimestamp =>
   `${mongooseTimestamp.slice(0, mongooseTimestamp.indexOf("T"))}`;
 
-const saveUserActivity = (array, movieID) => {
-  console.log("array: ", array);
-  console.log("stringified movieID: ", JSON.stringify(movieID));
-  switch (array) {
-    case null:
-      console.log("null case");
-      localStorage.setItem("userActivity", JSON.stringify([movieID]));
-      break;
-    default:
-      console.log("in default");
-      JSON.parse(array).includes(JSON.stringify(movieID))
-        ? console.log("this movie is already saved in userActivity")
-        : localStorage.setItem(
-            "userActivity",
-            JSON.stringify([...JSON.parse(array), movieID])
-          );
-  }
-};
+// const saveUserActivity = (array, movieID) => {
+//   console.log("array: ", array);
+//   console.log("stringified movieID: ", JSON.stringify(movieID));
+//   switch (array) {
+//     case null:
+//       console.log("null case");
+//       localStorage.setItem("userActivity", JSON.stringify([movieID]));
+//       break;
+//     default:
+//       console.log("in default");
+//       JSON.parse(array).includes(JSON.stringify(movieID))
+//         ? console.log("this movie is already saved in userActivity")
+//         : localStorage.setItem(
+//             "userActivity",
+//             JSON.stringify([...JSON.parse(array), movieID])
+//           );
+//   }
+// };
 
 class CommentsPage extends Component {
   constructor(props) {
@@ -56,7 +61,8 @@ class CommentsPage extends Component {
       comments: [],
       fb: false,
       picture: "/user.svg",
-      attendees: []
+      attendees: [],
+      needsToLogIn: false
     };
     this.getComments = this.getComments.bind(this);
     this.addAComment = this.addAComment.bind(this);
@@ -65,10 +71,20 @@ class CommentsPage extends Component {
     this.handleAttending = this.handleAttending.bind(this);
     this.handleNotAttending = this.handleNotAttending.bind(this);
     this.getAttendees = this.getAttendees.bind(this);
+    this.getIntervals = this.getIntervals.bind(this);
   }
+
   componentDidMount() {
+    tokenChecker() ? this.getIntervals() : this.getLogInPage();
+  }
+
+  getIntervals() {
     this.interval1 = setInterval(()=> this.getComments(), 2000)
     this.interval2 = setInterval(()=> this.getAttendees(),2000)
+  }
+
+  getLogInPage(){
+    this.setState({needsToLogIn: true})
   }
 
   componentWillUnmount() {
@@ -113,10 +129,6 @@ class CommentsPage extends Component {
           comments: [...prevState.comments, newComment],
           picture
         }));
-        saveUserActivity(
-          localStorage.getItem("userActivity"),
-          data.comment.movie
-        );
       })
       .catch(err => console.log(err));
   }
@@ -125,10 +137,6 @@ class CommentsPage extends Component {
     const target = e.target,
       value = target.value,
       name = target.name;
-
-    // if(value.length < 1) {
-    //   let value = "Please write a message"
-    // }
     this.setState({
       [name]: value
     });
@@ -178,15 +186,9 @@ class CommentsPage extends Component {
 
   render() {
     console.log("COMMENTS PAGE PROPS", this.props);
-    // if (this.state.loading) {
-    //   return (
-    //     <div style={{ paddingTop: "18%" }}>
-    //       <AppBar title="" />
-    //       <h1>Loading.. </h1>;
-    //     </div>
-    //   );
-    // }
-    //
+    if(this.state.needsToLogIn) {
+      return (<LoginPage/>)
+    }
     return this.props.film ? (
       <div style={{ paddingTop: "18%" }}>
         <BackButton

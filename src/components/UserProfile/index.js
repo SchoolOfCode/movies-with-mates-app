@@ -6,19 +6,38 @@ import ActivityButton from "../ActivityButton";
 import Logo from "../Logo";
 import NavBar from "../NavBar";
 import AppBar from "../AppBar";
+import LoginPage from "../LoginPage";
+
+const tokenChecker = () => {
+  return localStorage.getItem("localToken") ||
+    localStorage.getItem("accessToken") ||
+    localStorage.getItem("email")
+    ? true
+    : false;
+};
 
 class UserProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: "",
-      picture: ""
+      picture: "",
+      needsToLogIn: false
     };
     this.getFB = this.getFB.bind(this);
+    this.getInfo = this.getInfo.bind(this);
   }
+
   componentDidMount() {
-    console.log("fbId", localStorage.getItem("fbId"));
+    tokenChecker() ? this.getInfo() : this.getLogInPage();
+  }
+
+  getInfo() {
     localStorage.getItem("fbId") ? this.getFB() : this.getLocal();
+  }
+
+  getLogInPage() {
+    this.setState({needsToLogIn: true})
   }
 
   getFB() {
@@ -62,6 +81,9 @@ class UserProfile extends Component {
   }
   render() {
     console.log("UP history", this.props);
+    if(this.state.needsToLogIn){
+      return (<LoginPage />)
+    }
     return (
       <div style={{ paddingBottom: "2%" }}>
         <AppBar title="Profile" />
