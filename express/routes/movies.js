@@ -48,18 +48,42 @@ const User = require("../models/users.js");
 router.get("/", (req, res, next) => {
   console.log("req.query", req.query);
   if (req.query.user) {
-    Movie.find({ members: req.query.user }, (err, movies) => {
-      if (err) {
-        res.json({ error: err });
+    var now = new Date();
+    var startOfToday = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate()
+    );
+    Movie.find(
+      {
+        $and: [
+          { members: req.query.user },
+          {
+            date: {
+              $gte: startOfToday
+            }
+          }
+        ]
+      },
+      (err, movies) => {
+        if (err) {
+          res.json({ error: err });
+        }
+        res.json({ going: movies });
       }
-      res.json({ going: movies });
-    });
+    );
   } else {
     let yesterday = new Date().getDate() - 1;
+    var now = new Date();
+    var startOfToday = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate()
+    );
     Movie.find(
       {
         date: {
-          $gte: new Date(2018, 0, yesterday).toISOString()
+          $gte: startOfToday
         }
       },
       (err, movies) => {
@@ -164,12 +188,23 @@ router.delete("/:id", function(req, res, next) {
 router.get("/search/:input", function(req, res) {
   const { input } = req.params;
   let userInput = new RegExp(input, "gi");
+  var now = new Date();
+  var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   Movie.find(
     {
-      $or: [
-        { cinema: { $regex: userInput } },
-        { movie: { $regex: userInput } },
-        { time: { $regex: userInput } }
+      $and: [
+        {
+          date: {
+            $gte: startOfToday
+          }
+        },
+        {
+          $or: [
+            { cinema: { $regex: userInput } },
+            { movie: { $regex: userInput } },
+            { time: { $regex: userInput } }
+          ]
+        }
       ]
     },
     (err, films) => {
@@ -260,51 +295,66 @@ router.delete("/:id/comments/:cid", (req, res, next) => {
 });
 
 router.get("/thing/:id", (req, res) => {
-  Movie.find({ "user.id": req.params.id }, (err, movies) => {
-    if (err) {
-      res.json({ err });
-    }
-    const arr1 = movies.map(film => film._id);
-    Comments.find({ user: req.params.id }, (errr, comments) => {
-      if (errr) {
-        res.json(errr);
+  var now = new Date();
+  var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  Movie.find(
+    {
+      $and: [
+        {
+          date: {
+            $gte: startOfToday
+          }
+        },
+        { "user.id": req.params.id }
+      ]
+    },
+    (err, movies) => {
+      if (err) {
+        res.json({ err });
       }
-      const arr2 = comments.map(c => c.movie);
-      Movie.find({ members: req.params.id }, (errrUpinHere, movies2) => {
-        if (errrUpinHere) {
-          res.json({ errrUpinHere });
+      const arr1 = movies.map(film => film._id);
+      Comments.find({ user: req.params.id }, (errr, comments) => {
+        if (errr) {
+          res.json(errr);
         }
-        const arr3 = movies2.map(f => f._id);
+        const arr2 = comments.map(c => c.movie);
+        Movie.find({ members: req.params.id }, (errrUpinHere, movies2) => {
+          if (errrUpinHere) {
+            res.json({ errrUpinHere });
+          }
+          const arr3 = movies2.map(f => f._id);
 
-        console.log("arr1", arr1);
-        console.log("arr2", arr2);
-        console.log("arr3", arr3);
+          console.log("arr1", arr1);
+          console.log("arr2", arr2);
+          console.log("arr3", arr3);
 
-        Comments.find({
-          $or: [
-            { movie: { $in: arr1 } },
-            { movie: { $in: arr2 } },
-            { movie: { $in: arr3 } }
-          ]
-        })
-          .sort({ updatedAt: -1 })
-          .exec((error, comments) => {
-            if (error) {
-              return res.json(error);
-            }
-            let noUser = comments.filter(c => c.user !== req.params.id);
-            res.json({
-              comments: noUser,
-              theirEvents: arr1,
-              commentedEvents: arr2,
-              going: arr3,
-              postedMovies: movies,
-              goingMovies: movies2
+          Comments.find({
+            $or: [
+              { movie: { $in: arr1 } },
+              { movie: { $in: arr2 } },
+              { movie: { $in: arr3 } }
+            ]
+          })
+            .sort({ updatedAt: -1 })
+            .exec((error, comments) => {
+              if (error) {
+                return res.json(error);
+              }
+              let noUser = comments.filter(c => c.user !== req.params.id);
+              res.json({
+                comments: noUser,
+                theirEvents: arr1,
+                commentedEvents: arr2,
+                going: arr3,
+                postedMovies: movies,
+                goingMovies: movies2
+              });
             });
-          });
+        });
       });
-    });
-  });
+    }
+  );
 });
 
 module.exports = router;
