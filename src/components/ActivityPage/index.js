@@ -45,8 +45,8 @@ class ActivityPage extends Component {
         console.log("GOING ARRAY", going);
 
         this.setState({
-          theirs: [...theirs.slice(0, 3)],
-          going: [...going.slice(0, 3)]
+          theirs,
+          going
         });
       })
       .then(() => console.log(this.state))
@@ -76,7 +76,14 @@ class ActivityPage extends Component {
             Click on a notification below to be redirected{" "}
           </h5>
         </div>
-        <div style={{ overflow: "scroll", height: "50vh" }}>
+        <div
+          style={{
+            overflow: "scroll",
+            minHeight: "50vh",
+            padding: 0,
+            marginRight: -20
+          }}
+        >
           {this.state.going.map(c => {
             return (
               <Link
