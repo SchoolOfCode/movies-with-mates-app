@@ -7,10 +7,10 @@ const LogoutButton = props => {
     style: {
       background: "white",
       color: "black",
-      width: "40%",
-      margin: "20px auto",
-      marginBottom: "20px",
-      
+      margin: "10px auto",
+      marginBottom: "10px",
+      width: "55vw"
+
     },
     activeStyle: {
       background: "white"
@@ -33,18 +33,22 @@ const LogoutButton = props => {
     >
       <img
         style={{
+          position: "relative",
           verticalAlign: "middle",
-          height: 26,
-          paddingRight: 40,
-          paddingTop: 10,
-          paddingLeft: 6,
-          paddingBottom: 8,
-          float: "left",
-          height: "70%"
+          height: "3.5vh",
+          left: "80px"
         }}
         src="logout.png"
       />
-      <span style={{ verticalAlign: "middle", marginLeft: -40 }}>Logout</span>
+      <span style={{
+        position: "relative",
+        display: "inline-block",
+        fontFamily: "Ubuntu, sans-serif",
+        fontSize: "1.2em",
+        left: "-74px"
+      }}>
+        Logout
+      </span>
     </SocialLoginButton>
   );
 };
