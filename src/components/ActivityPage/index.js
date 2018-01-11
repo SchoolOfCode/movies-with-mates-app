@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import localStorage from "localStorage";
+import ClockIcon from "material-ui/svg-icons/device/access-time";
 
 import Ticket from "../Ticket";
 import AppBar from "../AppBar";
@@ -54,9 +55,20 @@ class ActivityPage extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{overflow: "hidden"}}>
         <AppBar title="Activity Feed" />
-        <div style={{ paddingBottom: "20%" }} />
+        <div className="postMovieSummary"
+          style={{
+            position: "relative",
+            height: "32vh",
+            top: "-2vh",
+            paddingTop: "7%",
+            backgroundColor: "rgb(252, 252, 252)"
+          }}>
+          <h1 style={{position: "relative", top: "15vw", fontSize:"3.5em"}}> Your Notifications </h1>
+          <h5 style={{position: "relative", top: "15vw"}}> Click on a notification below to be redirected </h5>
+        </div>
+        <div style={{overflow: "scroll", height: "50vh" }}>
         {this.state.going.map(c => {
           return (
             <Link
@@ -65,15 +77,22 @@ class ActivityPage extends Component {
                 state: { prevPath: this.props.location.pathname }
               }}
             >
-              <div>
-                <img src={c.picture} />
-                {c.displayName} commented on a film you're going to
-                {timeStamp(c.createdAt)}
+              <div style={{marginBottom: "3%", width: "100vw"}}>
+                <div style={{position: "relative", width: "85%"}}>
+                <img src={c.picture} style={{height: "40px", width: "40px", borderRadius:"50%"}}/>
+                  <div style={{position: "relative", display: "inline-block", width: "60vw", top: "16px", left:"20px"}}>
+                    <p style={{marginLeft:"5px", left: "20vw", width: "80vw", color: "black", fontSize: "1.1em", textAlign:"left"}}>{c.displayName} commented on a film you're going to. </p>
+                    <div style={{position: "relative", width: "30vw", top: "-5px"}}>
+                      <ClockIcon style={{ position: "relative", display:"inline", height: "10px", width: "10px", top: "2px", left: "-5px", color:"#C1C1C1"}}/>
+                      <p style={{position: "relative", display: "inline", textAlign:"left", width: "26vw", color:"#C1C1C1"}}> {timeStamp(c.createdAt)} </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </Link>
           );
         })}
-        {this.state.theirs.map(c => {
+        {/* {this.state.theirs.map(c => {
           return (
             <Link
               to={{
@@ -88,8 +107,9 @@ class ActivityPage extends Component {
               </div>
             </Link>
           );
-        })}
+        })} */}
       </div>
+    </div>
     );
   }
 }
