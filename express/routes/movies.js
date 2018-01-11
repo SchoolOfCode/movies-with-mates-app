@@ -6,6 +6,10 @@ const Movie = require("../models/movies.js");
 const Comments = require("../models/comments.js");
 const User = require("../models/users.js");
 
+const createAttendee = user => ({ user, timestamp: Date.now() });
+const checkAttendees = (user, movie) =>
+  movie.members.filter(member => member.user === user).length > 0;
+
 //new get request
 
 // router.get("/", (req,res) => {
@@ -48,27 +52,49 @@ const User = require("../models/users.js");
 router.get("/", (req, res, next) => {
   console.log("req.query", req.query);
   if (req.query.user) {
-    Movie.find({ members: req.query.user }, (err, movies) => {
-      if (err) {
-        res.json({ error: err });
-      }
-      res.json({ going: movies });
-    });
+    var now = new Date();
+    var startOfToday = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate()
+    );
+    Movie.find({
+      $and: [
+        { "members.user": req.query.user },
+        {
+          date: {
+            $gte: startOfToday
+          }
+        }
+      ]
+    })
+      .sort({ date: 1 })
+      .exec((err, movies) => {
+        if (err) {
+          res.json({ error: err });
+        }
+        res.json({ going: movies });
+      });
   } else {
     let yesterday = new Date().getDate() - 1;
-    Movie.find(
-      {
-        date: {
-          $gte: new Date(2018, 0, yesterday).toISOString()
-        }
-      },
-      (err, movies) => {
+    var now = new Date();
+    var startOfToday = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate()
+    );
+    Movie.find({
+      date: {
+        $gte: startOfToday
+      }
+    })
+      .sort({ date: 1 })
+      .exec((err, movies) => {
         if (err) {
           res.json({ Error: err });
         }
         res.json({ payload: movies });
-      }
-    );
+      });
   }
 });
 
@@ -88,15 +114,16 @@ router.get("/:id/join", (req, res, next) => {
     if (err) {
       return res.json({ error: err });
     }
+    console.log("join ", movie);
     User.find(
       {
-        _id: { $in: movie.members }
+        _id: { $in: movie.members.map(m => m.user) }
       },
       (err, users) => {
         if (err) {
-          res.json({ error: err });
+          return res.json({ error: err });
         }
-        res.json({ attendees: users });
+        return res.json({ attendees: users });
       }
     );
   });
@@ -110,12 +137,12 @@ router.post("/:id/join", (req, res, next) => {
     if (err) {
       return res.json({ error: err });
     }
-    if (movie.members.includes(user)) {
+    if (checkAttendees(user, movie)) {
       return res.json({ message: "Already a member", payload: movie });
     }
-    movie.members.push(user);
+    movie.members.push(createAttendee(user));
     movie.save((err, movie) => {
-      res.json({ payload: movie });
+      return res.json({ payload: movie });
     });
   });
 });
@@ -126,15 +153,12 @@ router.delete("/:id/join", (req, res, next) => {
     if (err) {
       return res.json({ error: err });
     }
-    if (!movie.members.includes(user)) {
+    if (!checkAttendees(user, movie)) {
       return res.json({ message: "Not a member", payload: movie });
     }
     //TODO: make this work by splicing etc...
     let userIndex = movie.members.indexOf(user);
-    movie.members = [
-      ...movie.members.splice(0, userIndex),
-      ...movie.members.splice(userIndex + 1)
-    ];
+    movie.members = movie.members.filter(member => member.user !== user);
     movie.save((err, movie) => {
       res.json({ payload: movie });
     });
@@ -148,6 +172,8 @@ router.post("/", (req, res) => {
     if (err) {
       return res.json({ error: err });
     }
+    movie.members.push(createAttendee(req.body.user.id));
+    console.log(movie.members);
     res.json({ message: "Film event" });
   });
 });
@@ -164,12 +190,23 @@ router.delete("/:id", function(req, res, next) {
 router.get("/search/:input", function(req, res) {
   const { input } = req.params;
   let userInput = new RegExp(input, "gi");
+  var now = new Date();
+  var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   Movie.find(
     {
-      $or: [
-        { cinema: { $regex: userInput } },
-        { movie: { $regex: userInput } },
-        { time: { $regex: userInput } }
+      $and: [
+        {
+          date: {
+            $gte: startOfToday
+          }
+        },
+        {
+          $or: [
+            { cinema: { $regex: userInput } },
+            { movie: { $regex: userInput } },
+            { time: { $regex: userInput } }
+          ]
+        }
       ]
     },
     (err, films) => {
@@ -260,51 +297,124 @@ router.delete("/:id/comments/:cid", (req, res, next) => {
 });
 
 router.get("/thing/:id", (req, res) => {
-  Movie.find({ "user.id": req.params.id }, (err, movies) => {
-    if (err) {
-      res.json({ err });
-    }
-    const arr1 = movies.map(film => film._id);
-    Comments.find({ user: req.params.id }, (errr, comments) => {
-      if (errr) {
-        res.json(errr);
+  var now = new Date();
+  var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  Movie.find(
+    {
+      $and: [
+        {
+          date: {
+            $gte: startOfToday
+          }
+        },
+        { "user.id": req.params.id }
+      ]
+    },
+    (err, movies) => {
+      if (err) {
+        return res.json({ err });
       }
-      const arr2 = comments.map(c => c.movie);
-      Movie.find({ members: req.params.id }, (errrUpinHere, movies2) => {
-        if (errrUpinHere) {
-          res.json({ errrUpinHere });
-        }
-        const arr3 = movies2.map(f => f._id);
-
-        console.log("arr1", arr1);
-        console.log("arr2", arr2);
-        console.log("arr3", arr3);
-
-        Comments.find({
-          $or: [
-            { movie: { $in: arr1 } },
-            { movie: { $in: arr2 } },
-            { movie: { $in: arr3 } }
-          ]
-        })
-          .sort({ updatedAt: -1 })
-          .exec((error, comments) => {
-            if (error) {
-              return res.json(error);
+      //THE IDS OF THE MOVIEs THEY CREATED STARTING FROM TODAY
+      const arr1 = movies.map(film => film._id);
+      Comments.find(
+        {
+          $and: [
+            {
+              createdAt: {
+                $gte: startOfToday
+              }
+            },
+            {
+              user: req.params.id
             }
-            let noUser = comments.filter(c => c.user !== req.params.id);
-            res.json({
-              comments: noUser,
-              theirEvents: arr1,
-              commentedEvents: arr2,
-              going: arr3,
-              postedMovies: movies,
-              goingMovies: movies2
-            });
-          });
-      });
-    });
-  });
+          ]
+        },
+        (errr, comments) => {
+          if (errr) {
+            return res.json(errr);
+          }
+          //THE IDS OF MOVIES THAT THEY HAVE COMMENTED ON FROM TODAY
+          const arr2 = comments.map(c => c.movie);
+          Movie.find(
+            {
+              $and: [
+                {
+                  date: {
+                    $gte: startOfToday
+                  }
+                },
+                {
+                  members: {
+                    $elemMatch: {
+                      user: req.params.id
+                    }
+                  }
+                }
+              ]
+            },
+            (errrUpinHere, movies2) => {
+              if (errrUpinHere) {
+                return res.json({ errrUpinHere });
+              }
+              console.log("MOVIES", movies2);
+
+              let membersArray = movies2.map(movie => {
+                return movie.members[0];
+              });
+
+              console.log("MEMBERS ARRAY", membersArray);
+              let timeStamps = membersArray.map(user => user.timestamp);
+              console.log("TIMESTAMPS ARRAY: ", timeStamps);
+
+              //THE IDS OF MOVIES THAT THEY HAVE CLICKED ATTENDING ON
+              const arr3 = movies2.map(f => f._id);
+
+              console.log("arr1", arr1);
+              console.log("arr2", arr2);
+              console.log("arr3", arr3);
+
+              Comments.find({
+                $or: [
+                  { movie: { $in: arr1 } },
+                  { movie: { $in: arr2 } },
+                  {
+                    movie: {
+                      $and: [
+                        { $in: arr3 },
+                        {
+                          createdAt: {
+                            $gte: {
+                              $in: timeStamps
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              })
+                .sort({ updatedAt: -1 })
+                .exec((error, comments) => {
+                  if (error) {
+                    return res.json(error);
+                  }
+                  let noUser = comments.filter(c => c.user !== req.params.id);
+                  res.json({
+                    comments: noUser,
+                    theirEvents: arr1,
+                    commentedEvents: arr2,
+                    going: arr3,
+                    postedMovies: movies,
+                    goingMovies: movies2
+                  });
+                });
+            }
+          );
+        }
+      );
+    }
+  );
 });
 
 module.exports = router;
