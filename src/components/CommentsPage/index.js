@@ -66,10 +66,20 @@ class CommentsPage extends Component {
     this.handleNotAttending = this.handleNotAttending.bind(this);
     this.getAttendees = this.getAttendees.bind(this);
   }
+
   componentDidMount() {
-    this.getComments();
-    this.getAttendees();
+    // this.getComments();
+    // this.getAttendees();
     // }
+    this.getComments()
+    this.getAttendees()
+    this.interval1 = setInterval(() => this.getComments(), 5000)
+    this.interval2 = setInterval(() => this.getAttendees(), 5000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval1);
+    clearInterval(this.interval2);
   }
 
   getComments() {
