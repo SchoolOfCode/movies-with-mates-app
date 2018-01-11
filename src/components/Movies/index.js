@@ -4,6 +4,7 @@ import NavBar from "../NavBar";
 
 import TextField from "material-ui/TextField";
 import SearchIcon from "material-ui/svg-icons/action/search";
+import UpArrowIcon from "material-ui/svg-icons/navigation/subdirectory-arrow-right";
 import { Link } from "react-router-dom";
 import { Grid, Row, Col } from "react-bootstrap";
 
@@ -83,7 +84,7 @@ const Movies = props => {
           }}
         />
       </div>
-      <div style={{ height: "10vh" }} />
+      <div style={{ height: "8vh" }} />
       <div
         style={{
           overflow: "scroll",
@@ -92,12 +93,33 @@ const Movies = props => {
           height: "80vh"
         }}
       >
-        <div className="pageInfo">
+        <div
+					style={{
+					position: "relative",
+					height: "29vh",
+					top: "-3vh",
+					paddingTop: "12%",
+					backgroundColor: "rgb(252, 252, 252)"
+					}}
+					className="pageInfo">
           <h3 style={{ marginBottom: "3vh", fontSize: "3.5em" }}>
             Movie Events
           </h3>
-          <h3 style={{ fontSize: "1.5em" }}>
-            Scroll to find a movie that suits you...
+					<h3 style={{ fontSize: "2em" }}>
+						Click to create your own
+					</h3>
+					<UpArrowIcon
+						style={{
+							color: "#F94548",
+							position: "relative",
+							height: "4vh",
+							left: "125px",
+							top: "-41px",
+							transform: "rotate(-64deg)"
+						}}
+					/>
+          <h3 style={{ position:"relative", top:"-60px", fontSize: "1.5em" }}>
+            Or scroll to find a movie that suits you...
           </h3>
         </div>
         <div id="container">
