@@ -75,16 +75,18 @@ class CommentsPage extends Component {
   }
 
   componentDidMount() {
+    this.getComments();
+    this.getAttendees();
     tokenChecker() ? this.getIntervals() : this.getLogInPage();
   }
 
   getIntervals() {
-    this.interval1 = setInterval(()=> this.getComments(), 200000)
-    this.interval2 = setInterval(()=> this.getAttendees(),200000)
+    this.interval1 = setInterval(() => this.getComments(), 10000);
+    this.interval2 = setInterval(() => this.getAttendees(), 10000);
   }
 
-  getLogInPage(){
-    this.setState({needsToLogIn: true})
+  getLogInPage() {
+    this.setState({ needsToLogIn: true });
   }
 
   componentWillUnmount() {
@@ -180,14 +182,14 @@ class CommentsPage extends Component {
       .then(res => res.json())
       .then(data => {
         console.log("attendees", data);
-        data.attendees && this.setState({ attendees: [...data.attendees] });
+        data.attendees && this.setState({ attendees: data.attendees });
       });
   }
 
   render() {
     console.log("COMMENTS PAGE PROPS", this.props);
-    if(this.state.needsToLogIn) {
-      return (<LoginPage/>)
+    if (this.state.needsToLogIn) {
+      return <LoginPage />;
     }
     return this.props.film ? (
       <div style={{ paddingTop: "18%" }}>
