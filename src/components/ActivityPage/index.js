@@ -80,11 +80,11 @@ class ActivityPage extends Component {
               <div style={{marginBottom: "3%", width: "100vw"}}>
                 <div style={{position: "relative", width: "85%"}}>
                 <img src={c.picture} style={{height: "40px", width: "40px", borderRadius:"50%"}}/>
-                  <div style={{position: "relative", display: "inline-block", width: "60vw", top: "19px", left:"20px"}}>
+                  <div style={{position: "relative", display: "inline-block", width: "60vw", top: "16px", left:"20px"}}>
                     <p style={{marginLeft:"5px", left: "20vw", width: "80vw", color: "black", fontSize: "1.1em", textAlign:"left"}}>{c.displayName} commented on a film you're going to. </p>
-                    <div style={{position: "relative", width: "30vw", top: "-10px"}}>
-                      <ClockIcon style={{ position: "relative", display:"inline", height: "10px", width: "10px", top: "2px", left: "-2px", color:"#C1C1C1"}}/>
-                      <p style={{position: "relative", display: "inline", textAlign:"left", width: "26vw", marginLeft: "3px", color:"#C1C1C1"}}> {timeStamp(c.createdAt)} </p>
+                    <div style={{position: "relative", width: "30vw", top: "-5px"}}>
+                      <ClockIcon style={{ position: "relative", display:"inline", height: "10px", width: "10px", top: "2px", left: "-5px", color:"#C1C1C1"}}/>
+                      <p style={{position: "relative", display: "inline", textAlign:"left", width: "26vw", color:"#C1C1C1"}}> {timeStamp(c.createdAt)} </p>
                     </div>
                   </div>
                 </div>
@@ -92,7 +92,7 @@ class ActivityPage extends Component {
             </Link>
           );
         })}
-        {this.state.theirs.map(c => {
+        {/* {this.state.theirs.map(c => {
           return (
             <Link
               to={{
@@ -107,7 +107,7 @@ class ActivityPage extends Component {
               </div>
             </Link>
           );
-        })}
+        })} */}
       </div>
     </div>
     );
