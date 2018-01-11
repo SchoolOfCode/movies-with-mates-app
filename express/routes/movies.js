@@ -1,5 +1,5 @@
 const express = require("express");
-
+const mongoose = require("mongoose"); // get rid after hack finished with ObjectId Casting
 const router = express.Router();
 
 const Movie = require("../models/movies.js");
@@ -9,7 +9,8 @@ const User = require("../models/users.js");
 const createAttendee = user => ({ user, timestamp: Date.now() });
 const checkAttendees = (user, movie) =>
   movie.members.filter(member => member.user === user).length > 0;
-
+const getAttendee = (user, movie) =>
+  movie.members.filter(member => member.user === user);
 //new get request
 
 // router.get("/", (req,res) => {
@@ -168,11 +169,11 @@ router.delete("/:id/join", (req, res, next) => {
 router.post("/", (req, res) => {
   console.log(req.body);
   const movieEvent = new Movie(req.body);
+  movieEvent.members.push(createAttendee(req.body.user.id));
   movieEvent.save((err, movie) => {
     if (err) {
       return res.json({ error: err });
     }
-    movie.members.push(createAttendee(req.body.user.id));
     console.log(movie.members);
     res.json({ message: "Film event" });
   });
@@ -335,7 +336,7 @@ router.get("/thing/:id", (req, res) => {
             return res.json(errr);
           }
           //THE IDS OF MOVIES THAT THEY HAVE COMMENTED ON FROM TODAY
-          const arr2 = comments.map(c => c.movie);
+          const arr2 = comments.map(c => mongoose.Types.ObjectId(c.movie));
           Movie.find(
             {
               $and: [
@@ -359,13 +360,16 @@ router.get("/thing/:id", (req, res) => {
               }
               console.log("MOVIES", movies2);
 
-              let membersArray = movies2.map(movie => {
-                return movie.members[0];
+              let timeStamps = movies2.map(movie => {
+                const found = getAttendee(req.params.id, movie);
+                if (found.length > 0) {
+                  return found[0].timestamp;
+                }
               });
 
-              console.log("MEMBERS ARRAY", membersArray);
-              let timeStamps = membersArray.map(user => user.timestamp);
-              console.log("TIMESTAMPS ARRAY: ", timeStamps);
+              // console.log("MEMBERS ARRAY", membersArray);
+              // let timeStamps = membersArray.map(user => user.timestamp);
+              // console.log("TIMESTAMPS ARRAY: ", timeStamps);
 
               //THE IDS OF MOVIES THAT THEY HAVE CLICKED ATTENDING ON
               const arr3 = movies2.map(f => f._id);
@@ -380,16 +384,7 @@ router.get("/thing/:id", (req, res) => {
                   { movie: { $in: arr2 } },
                   {
                     movie: {
-                      $and: [
-                        { $in: arr3 },
-                        {
-                          createdAt: {
-                            $gte: {
-                              $in: timeStamps
-                            }
-                          }
-                        }
-                      ]
+                      $in: arr3
                     }
                   }
                 ]
@@ -397,11 +392,13 @@ router.get("/thing/:id", (req, res) => {
                 .sort({ updatedAt: -1 })
                 .exec((error, comments) => {
                   if (error) {
+                    console.log("ERROR: ", error);
                     return res.json(error);
                   }
-                  let noUser = comments.filter(c => c.user !== req.params.id);
+                  console.log("comments FOUND ", comments);
+                  // let noUser = comments.filter(c => c.user !== req.params.id);
                   res.json({
-                    comments: noUser,
+                    comments,
                     theirEvents: arr1,
                     commentedEvents: arr2,
                     going: arr3,
