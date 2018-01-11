@@ -6,6 +6,8 @@ const Movie = require("../models/movies.js");
 const Comments = require("../models/comments.js");
 const User = require("../models/users.js");
 
+const sendEmail = require("../libs/email.js");
+
 const createAttendee = user => ({ user, timestamp: Date.now() });
 const checkAttendees = (user, movie) =>
   movie.members.filter(member => member.user === user).length > 0;
@@ -143,6 +145,13 @@ router.post("/:id/join", (req, res, next) => {
     }
     movie.members.push(createAttendee(user));
     movie.save((err, movie) => {
+      sendEmail({
+        to: req.headers.email,
+        subject: "New MWM notification",
+        text: `You are going to see the following movie: ${
+          movie.movie
+        } ! Happy mating.`
+      });
       return res.json({ payload: movie });
     });
   });
@@ -168,6 +177,7 @@ router.delete("/:id/join", (req, res, next) => {
 
 router.post("/", (req, res) => {
   console.log(req.body);
+  console.log("EMAIL: ", req.headers.email);
   const movieEvent = new Movie(req.body);
   movieEvent.members.push(createAttendee(req.body.user.id));
   movieEvent.save((err, movie) => {
@@ -175,7 +185,12 @@ router.post("/", (req, res) => {
       return res.json({ error: err });
     }
     console.log(movie.members);
-    res.json({ message: "Film event" });
+    sendEmail({
+      to: req.headers.email,
+      subject: "New MWM notification",
+      text: "You just created a movie event on the MWM app! Happy mating."
+    });
+    return res.json({ message: "Film event" });
   });
 });
 

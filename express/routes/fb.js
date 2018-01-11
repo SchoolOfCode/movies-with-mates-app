@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const User = require("../models/users.js");
- 
+
 router.get("/", function(req, res) {
   // console.log("header", req.headers);
   let fbId = req.headers.fbid;
@@ -24,7 +24,7 @@ router.post("/", function(req, res) {
       // console.log("ho");
       const newFBUser = new User({
         name: req.body.name,
-        local: {},
+        local: { email: req.body.local.email },
         tokens: {
           accessToken: req.body.tokens.accessToken
         },
@@ -55,7 +55,8 @@ router.post("/", function(req, res) {
       fbId: req.body.fb.fbId,
       picture: req.body.fb.picture,
       userId,
-      displayName
+      displayName,
+      email: req.body.local.email
     });
   });
 });
