@@ -5,6 +5,7 @@
   "dependencies": {
     "chalk": "^2.3.0",
     "history": "^4.7.2",
+    "jest": "^22.0.6",
     "jsonwebtoken": "^8.1.0",
     "localStorage": "^1.0.3",
     "material-ui": "^0.20.0",
@@ -24,7 +25,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "jest",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -s -p 9001"
   },

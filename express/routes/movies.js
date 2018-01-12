@@ -13,6 +13,7 @@ const checkAttendees = (user, movie) =>
   movie.members.filter(member => member.user === user).length > 0;
 const getAttendee = (user, movie) =>
   movie.members.filter(member => member.user === user);
+
 //new get request
 
 // router.get("/", (req,res) => {
