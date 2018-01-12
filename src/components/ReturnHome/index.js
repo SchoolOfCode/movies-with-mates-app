@@ -6,7 +6,7 @@ const ReturnHome = props => {
     style: {
       background: "#e03c3c",
       color: "white",
-      width: "80%",
+      width: "55vw",
       margin: "10px auto",
       marginBottom: "20px",
       position:"relative",
@@ -22,7 +22,7 @@ const ReturnHome = props => {
       {...{ ...customProps, ...props }}
       onClick={() => window.location.replace("/")}
     >
-      <span style={{ verticalAlign: "middle", marginLeft: -30 }}>
+      <span style={{ verticalAlign: "middle"}}>
         Return to Home
       </span>
     </SocialLoginButton>

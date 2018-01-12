@@ -25,7 +25,7 @@ const CineworldButton = props => {
       onClick={props.onClick}
     >
       <span style={{ verticalAlign: "middle"}}>
-        Cineworld listings
+        Cineworld
       </span>
     </SocialLoginButton>
   );

@@ -115,10 +115,11 @@ class ActivityPage extends Component {
                         style={{
                           marginLeft: "5px",
                           left: "20vw",
-                          width: "80vw",
+                          width: "70vw",
                           color: "black",
                           fontSize: "1.1em",
-                          textAlign: "left"
+                          textAlign: "left",
+                          overflow: "auto"
                         }}
                       >
                         {c.displayName === localStorage.getItem("displayName")
