@@ -113,8 +113,10 @@ class MoviePage extends Component {
     if (this.state.loading) {
       return (
         <div>
-          <CircularProgress size={50} color={"red"} thickness={10} />
-        </div>
+         <CircularProgress style={{position: "absolute", top: "300px", right:"160px"}} size={50} color={"red"} thickness={10} />
+         <div style={{position:"fixed", backgroundColor:"white", zIndex:"1000", width:"100vw", height:"10vh", bottom:"0"}}>
+         </div>
+       </div>
       );
     }
     return (
