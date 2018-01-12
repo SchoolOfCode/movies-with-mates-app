@@ -124,7 +124,8 @@ class PostAMovie extends Component {
         ...{
           user: {
             picture: localStorage.getItem("picture"),
-            name: localStorage.getItem("displayName")
+            name: localStorage.getItem("displayName"),
+            id: localStorage.getItem("userId")
           }
         }
       })
@@ -281,8 +282,8 @@ class PostAMovie extends Component {
               paddingBottom: "12%",
               backgroundColor: "rgb(252, 252, 252)"
             }}>
-              <h1 style={{textAlign: "center"}}> Start a Movie Event </h1>
-              <h5 style={{textAlign: "center", margin: 0}}> Meet with like-minded people and enjoy </h5>
+              <h1 style={{textAlign: "center", fontSize: "3.5em"}}> Start a Movie Event </h1>
+              <h5 style={{textAlign: "center", margin: 0, fontSize:"1.5em"}}> Meet with like-minded people and enjoy </h5>
               <h5 style={{textAlign: "center", margin: 0}}> a movie together </h5>
           </div>
           <TodayTomorrowContainer

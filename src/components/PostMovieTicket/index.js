@@ -1,10 +1,11 @@
 import React from "react";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
-import Clock from "../Clock";
-import Location from "../Location";
-import MovieLogo from "../MovieLogo";
-import Calendar from "../Calendar";
+
+import ClockIcon from "material-ui/svg-icons/device/access-time";
+import LocationIcon from "material-ui/svg-icons/communication/location-on";
+import MovieIcon from "material-ui/svg-icons/maps/local-movies";
+import DateIcon from "material-ui/svg-icons/action/date-range";
 
 import "./PostTicket.css"
 
@@ -15,7 +16,7 @@ const PostMovieTicket = props => {
         <p
           style={{
             position: "relative",
-            top: 30,
+            top: 24,
             left: 140,
             color: "white",
             fontSize: "2em",
@@ -24,7 +25,7 @@ const PostMovieTicket = props => {
             marginTop: 0
           }}
         >
-          <Location style={{ height:"25px"}} /> :{" "}
+          <LocationIcon style={{ position:"relative", top:"8px",color:"white", height:"25px", padding:"2px"}} /> {" "}
           <TextField
             id="information"
             name="cinema"
@@ -35,7 +36,7 @@ const PostMovieTicket = props => {
             underlineShow={false}
           />
           <br />
-          <MovieLogo style={{ height:"25px"}} />  :{" "}
+          <MovieIcon style={{  position:"relative", top:"8px",color:"white", height:"25px", padding:"2px"}} />  {" "}
           <TextField
             id="information"
             name="movie"
@@ -46,7 +47,7 @@ const PostMovieTicket = props => {
             underlineShow={false}
           />
           <br />
-          <Calendar style={{ height:"25px"}} />  :{" "}
+          <DateIcon style={{  position:"relative", top:"8px",color:"white", height:"25px", padding:"2px"}} />  {" "}
           <TextField
             id="information"
             name="date"
@@ -57,7 +58,7 @@ const PostMovieTicket = props => {
             underlineShow={false}
           />
           <br />
-            <Clock style={{ height:"25px"}}/>   :{" "}
+            <ClockIcon style={{  position:"relative", top:"8px",color:"white", height:"25px", padding:"2px"}}/>   {" "}
           <TextField
             id="information"
             name="time"

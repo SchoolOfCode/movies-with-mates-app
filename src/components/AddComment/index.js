@@ -19,31 +19,31 @@ class AddComment extends Component {
 
   render() {
     return (
-      <Col xs={12} style={{position: "fixed", width: "100%", bottom:0, paddingBottom: "2%"}} >
-        <Col xs={10} style={{padding: 0}}>
+      <div style={{position: "fixed", width: "100%", bottom:0, paddingBottom: "2%"}} >
+        <div style={{position:"fixed", display: "inline", left:"3%", bottom: "1%", width: "78%"}}>
         <TextField
           name="comment"
           onChange={this.props.handleChange}
           style={{ width: "100%", height: "7vh", padding: 0 }}
           hintText="Add a comment"
           type="text"
+          fullWidth={true}
           value={this.props.comment}
           underlineStyle={styles.underlineStyle}
           underlineFocusStyle={styles.underlineStyle}
         />
-      </Col>
-      <Col xs={2} style={{padding: 0}} >
+      </div>
+      <div style={{position:"relative", display: "inline", left: "40%"}} >
         <FloatingActionButton
         backgroundColor={"#F94548"}
         labelColor={"white"}
-        // fullWidth="true"
         buttonStyle={{paddingRight: "1%"}}
         label="send"
         onClick={this.props.addAComment}>
-        <img style={{height: "40%", width: "45%"}} src={"/play-arrow-white.svg"}/>
+        <img className="sendIcon" style={{position:"relative", left: "-2px", height: "40%", width: "45%", margin: "0 auto"}} src={"/send-msg.svg"}/>
       </FloatingActionButton>
-      </Col>
-      </Col>
+    </div>
+  </div>
     )
   }
 }

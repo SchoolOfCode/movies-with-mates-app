@@ -1,24 +1,47 @@
 import React, { Component } from "react";
+import SocialLoginButton from "react-social-login-buttons/lib/buttons/SocialLoginButton";
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 import FindAMovieButton from "../FindAMovieButton";
-import LogoutButton from "../LogoutButton";
 import ActivityButton from "../ActivityButton";
 import Logo from "../Logo";
 import NavBar from "../NavBar";
 import AppBar from "../AppBar";
+import LoginPage from "../LoginPage";
+
+const tokenChecker = () => {
+  return localStorage.getItem("localToken") ||
+    localStorage.getItem("accessToken") ||
+    localStorage.getItem("email")
+    ? true
+    : false;
+};
 
 class UserProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: "",
-      picture: ""
+      picture: "",
+      needsToLogIn: false
     };
     this.getFB = this.getFB.bind(this);
+    this.getInfo = this.getInfo.bind(this);
   }
+
   componentDidMount() {
-    console.log("fbId", localStorage.getItem("fbId"));
+    tokenChecker() ? this.getInfo() : this.getLogInPage();
+  }
+
+  getInfo() {
     localStorage.getItem("fbId") ? this.getFB() : this.getLocal();
+  }
+
+  getLogInPage() {
+    this.setState({needsToLogIn: true})
   }
 
   getFB() {
@@ -62,11 +85,35 @@ class UserProfile extends Component {
   }
   render() {
     console.log("UP history", this.props);
+    if(this.state.needsToLogIn){
+      return (<LoginPage />)
+    }
     return (
       <div style={{ paddingBottom: "2%" }}>
         <AppBar title="Profile" />
-        <div style={{height: "55vh", backgroundColor: "rgb(252,252,252)"}}>
-          <h1 style={{ margin: 0, paddingTop: 100, paddingBottom: 40 }}>
+        <IconMenu
+          style={{ zIndex: "500", left: "160px", top: "2px"}}
+          iconStyle={{color: "white"}}
+          menuStyle={{padding:"0px", margin:"0px"}}
+           iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+           targetOrigin={{horizontal: 'right', vertical: 'top'}}
+         >
+           <MenuItem primaryText="Logout"
+             onClick={() => {
+               localStorage.removeItem("accessToken");
+               localStorage.removeItem("fbId");
+               localStorage.removeItem("localToken");
+               localStorage.removeItem("email");
+               localStorage.removeItem("picture");
+               localStorage.removeItem("displayName");
+               localStorage.removeItem("userId");
+               this.props.history.push("/");
+             }}
+           />
+       </IconMenu>
+        <div style={{height: "45vh", backgroundColor: "rgb(252,252,252)"}}>
+          <h1 style={{ margin: 0, paddingTop: "10%", paddingBottom: 40 }}>
             Hi, {this.state.name}!
           </h1>
           <img
@@ -79,9 +126,43 @@ class UserProfile extends Component {
           />
         </div>
 
-        <FindAMovieButton history={this.props.history} />
-        <ActivityButton history={this.props.history} />
-        <LogoutButton history={this.props.history} />
+        {/* <FindAMovieButton history={this.props.history} />
+        <ActivityButton history={this.props.history} /> */}
+
+        <div style={{position:"relative", top: "5vh"}}>
+          <SocialLoginButton style={{
+            background: "#e03c3c",
+            margin: "10px auto",
+            marginBottom: "10px",
+            width: "55vw"}}
+            icon={"/plus-button-white.svg"}
+            onClick={() => this.props.history.replace("/create")}/>
+              <span
+                style={{
+                  position: "relative",
+                  verticalAlign: "middle",
+                  display: "inline-block",
+                  top: "-46px",
+                  left: "-20px",
+                  fontFamily: "Ubuntu, sans-serif",
+                  color: "white",
+                  fontSize: "1.2em"
+                }}
+              >
+                Post a Movie Event
+              </span>
+              <img
+                src="/plus-button-white.svg"
+                style={{
+                  position: "relative",
+                  display: "inline",
+                  height: "3.5vh",
+      						top: "-46px",
+                  left: "26px"
+                }}
+              />
+          </div>
+
         <NavBar history={this.props.history} match={this.props.match.url} />
       </div>
     );

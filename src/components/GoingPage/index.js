@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import AppBar from "../AppBar";
 import NavBar from "../NavBar";
 import Ticket from "../Ticket";
+import BackButton from "../BackButton";
 
 const dateStamp = mongooseTimestamp =>
   `${mongooseTimestamp.slice(0, mongooseTimestamp.indexOf("T"))}`;
@@ -26,11 +27,14 @@ class GoingPage extends Component {
     return (
       <div style={{ paddingTop: "20%", paddingBottom: "20%" }}>
         <AppBar title="Going" />
-        <h2>You have clicked attending on the following movies...</h2>
+        <h2>Films you're planning on seeing...</h2>
         <div id="bigDiv">
           {this.state.going.map((film, idx) => (
             <Link
-              to={`${this.props.match.url}/${film.movie}`}
+              to={{
+                pathname: `/movies/${film._id}`,
+                state: { prevPath: this.props.location.pathname }
+              }}
               style={{ textDecoration: "none" }}
             >
               <Ticket

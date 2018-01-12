@@ -4,6 +4,8 @@ import SearchBar from "material-ui-search-bar";
 import TextField from "material-ui/TextField";
 import { Route, Switch, Link } from "react-router-dom";
 
+import CircularProgress from "material-ui/CircularProgress";
+
 import Movies from "../Movies";
 import CommentsPage from "../CommentsPage";
 import AppBar from "../AppBar";
@@ -90,8 +92,11 @@ class MoviePage extends Component {
     return;
     // return arr[arr.map(filmInfo => filmInfo.movie).indexOf(film)]._id;
   }
-  filmFinder(film) {
-    const found = this.state.films.filter(f => f.movie === film);
+  eventFinderById(eventId) {
+    const found = this.state.films.filter(f => f._id === eventId);
+    console.log("STATE OF MOVIE PAGE", this.state);
+    console.log("EVENT ID", eventId);
+    console.log("FILM FOUND", found[0]);
     return found[0];
     // return arr[arr.map(filmInfo => filmInfo.movie).indexOf(film)]._id;
   }
@@ -106,7 +111,13 @@ class MoviePage extends Component {
       return <LoginPage />;
     }
     if (this.state.loading) {
-      return <div>no no no</div>;
+      return (
+        <div>
+         <CircularProgress style={{position: "absolute", top: "300px", right:"160px"}} size={50} color={"red"} thickness={10} />
+         <div style={{position:"fixed", backgroundColor:"white", zIndex:"1000", width:"100vw", height:"10vh", bottom:"0"}}>
+         </div>
+       </div>
+      );
     }
     return (
       <div>
@@ -129,13 +140,16 @@ class MoviePage extends Component {
         />
         <Route
           exact
-          path={`${this.props.match.url}/:film`}
-          component={props => (
-            <CommentsPage
-              film={this.filmFinder(props.match.params.film)}
-              {...props}
-            />
-          )}
+          path={`${this.props.match.url}/:filmId`}
+          render={props => {
+            console.log("PARAMS", props.match);
+            return (
+              <CommentsPage
+                film={this.eventFinderById(props.match.params.filmId)}
+                {...props}
+              />
+            );
+          }}
         />
       </div>
     );
