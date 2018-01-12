@@ -18,7 +18,9 @@ const responseFacebook = response => {
     method: "POST",
     body: JSON.stringify({
       name: response.name,
-      local: {},
+      local: {
+        email: response.email
+      },
       tokens: {
         accessToken: response.accessToken
       },
@@ -37,11 +39,13 @@ const responseFacebook = response => {
       let picture = data.picture;
       let userId = data.userId;
       let displayName = data.displayName;
+      let email = data.email;
       localStorage.setItem("accessToken", fbAccessToken);
       localStorage.setItem("fbId", fbId);
       localStorage.setItem("picture", picture);
       localStorage.setItem("userId", userId);
       localStorage.setItem("displayName", displayName);
+      localStorage.setItem("email", email);
     })
     .then(() => {
       // history.push("/profile");
@@ -51,16 +55,16 @@ const responseFacebook = response => {
 };
 
 const FBLoginButton = props => (
-      <div>
-        <FacebookLogin
-          appId="192854244610400"
-          autoLoad={false}
-          fields="name,email,picture"
-          callback={responseFacebook}
-          textButton="Login with Facebook"
-          cssClass="fbLoginButton"
-        />
-      </div>
-    );
+  <div>
+    <FacebookLogin
+      appId="192854244610400"
+      autoLoad={false}
+      fields="name,email,picture"
+      callback={responseFacebook}
+      textButton="Login with Facebook"
+      cssClass="fbLoginButton"
+    />
+  </div>
+);
 
 export default FBLoginButton;

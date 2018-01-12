@@ -116,7 +116,8 @@ class PostAMovie extends Component {
     e.preventDefault();
     fetch("/api/movies", {
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        email: localStorage.getItem("email")
       },
       method: "POST",
       body: JSON.stringify({
@@ -273,7 +274,8 @@ class PostAMovie extends Component {
             // paddingBottom: "8%"
           }}
         >
-          <div className="postMovieSummary"
+          <div
+            className="postMovieSummary"
             style={{
               position: "relative",
               height: "32vh",
@@ -281,16 +283,32 @@ class PostAMovie extends Component {
               paddingTop: "12%",
               paddingBottom: "12%",
               backgroundColor: "rgb(252, 252, 252)"
-            }}>
-              <h1 style={{textAlign: "center", fontSize: "3.5em"}}> Start a Movie Event </h1>
-              <h5 style={{textAlign: "center", margin: 0, fontSize:"1.5em"}}> Meet with like-minded people and enjoy </h5>
-              <h5 style={{textAlign: "center", margin: 0}}> a movie together </h5>
+            }}
+          >
+            <h1 style={{ textAlign: "center", fontSize: "3.5em" }}>
+              {" "}
+              Start a Movie Event{" "}
+            </h1>
+            <h5 style={{ textAlign: "center", margin: 0, fontSize: "1.5em" }}>
+              {" "}
+              Meet with like-minded people and enjoy{" "}
+            </h5>
+            <h5 style={{ textAlign: "center", margin: 0 }}>
+              {" "}
+              a movie together{" "}
+            </h5>
           </div>
           <TodayTomorrowContainer
             today={this.onTodayClick}
             tomorrow={this.onTomorrowClick}
           />
-          <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center"
+            }}
+          >
             {this.state.seeCinemas ? (
               <OdeonButton onClick={this.onOdeonClick} />
             ) : (
