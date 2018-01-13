@@ -6,25 +6,18 @@ import ClockIcon from "material-ui/svg-icons/device/access-time";
 import Ticket from "../Ticket";
 import AppBar from "../AppBar";
 import NavBar from "../NavBar";
+import Return from "../ReturnHome";
 
-const dateStamp = mongooseTimestamp =>
-  `${mongooseTimestamp.slice(0, mongooseTimestamp.indexOf("T"))}`;
-
-const timeStamp = mongooseTimestamp =>
-  `${mongooseTimestamp.slice(
-    0,
-    mongooseTimestamp.indexOf("T")
-  )} ${mongooseTimestamp.slice(
-    mongooseTimestamp.indexOf("T") + 1,
-    mongooseTimestamp.lastIndexOf(":")
-  )}`;
+const dateStamp = require("../../tests/frontEndFunctions").dateStamp;
+const timeStamp = require("../../tests/frontEndFunctions").timeStamp;
 
 class ActivityPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       theirs: [],
-      going: []
+      going: [],
+      error: false
     };
   }
 
@@ -50,10 +43,20 @@ class ActivityPage extends Component {
         });
       })
       .then(() => console.log(this.state))
-      .catch(err => console.log(err));
+      .catch(err => this.setState({error: true}));
   }
 
   render() {
+    if (this.state.error) {
+      return (
+        <div style={{position: "fixed", backgroundColor: "white", zIndex: "1000", height: "100vh", width: "100vw"}}>
+          <h2 style={{ margin: 0, fontFamily:"Ubuntu", position:"relative", top:"175px" }}>Aw, shucks.</h2>
+          <h2 style={{ margin: 0, fontFamily:"Ubuntu", position:"relative", top:"175px" }}>We're experiencing some technical difficulties</h2>
+          <h1 style={{ margin: 0, fontFamily:"Ubuntu", position:"relative", top:"175px", fontSize: "10em", marginTop:"10vh"}}> :( </h1>
+          <Return />
+        </div>
+      )
+    }
     return (
       <div style={{ overflow: "hidden" }}>
         <AppBar title="Activity Feed" />

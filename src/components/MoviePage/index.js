@@ -10,14 +10,11 @@ import Movies from "../Movies";
 import CommentsPage from "../CommentsPage";
 import AppBar from "../AppBar";
 import LoginPage from "../LoginPage";
+import Return from "../ReturnHome";
 
-const tokenChecker = () => {
-  return localStorage.getItem("localToken") ||
-    localStorage.getItem("accessToken") ||
-    localStorage.getItem("email")
-    ? true
-    : false;
-};
+const eventFinderById = require("../../tests/frontEndFunctions").eventFinderById;
+const tokenChecker = require("../../tests/frontEndFunctions").tokenChecker;
+
 
 class MoviePage extends Component {
   constructor(props) {
@@ -26,11 +23,11 @@ class MoviePage extends Component {
       loading: true,
       films: [],
       searchTerm: "",
-      needsToLogIn: false
+      needsToLogIn: false,
+      error: false
     };
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
-    this.filmIDFinder = this.filmIDFinder.bind(this);
     this.fetchFilms = this.fetchFilms.bind(this);
   }
 
@@ -49,7 +46,8 @@ class MoviePage extends Component {
         }));
         console.log("state", this.state);
       })
-      .catch(error => console.log(error));
+      .catch(error => this.setState({loading: false, error: true})
+      );
   }
 
   handleSearchChange(e) {
@@ -70,7 +68,6 @@ class MoviePage extends Component {
   }
 
   handleSearch(e) {
-    // this.setState(prevState => ({ films: [] }));
     const searchTerm = encodeURIComponent(this.state.searchTerm).trim();
     fetch(`/api/movies/search/${searchTerm}`)
       .then(response => response.json())
@@ -80,25 +77,6 @@ class MoviePage extends Component {
         this.setState({ films: data.payload });
       })
       .catch(error => console.log(error));
-  }
-
-  filmIDFinder(arr, film) {
-    console.log(arr);
-    console.log(film);
-    const found = arr.filter(f => f.movie === film);
-    if (found.length > 0) {
-      return found[0]._id;
-    }
-    return;
-    // return arr[arr.map(filmInfo => filmInfo.movie).indexOf(film)]._id;
-  }
-  eventFinderById(eventId) {
-    const found = this.state.films.filter(f => f._id === eventId);
-    console.log("STATE OF MOVIE PAGE", this.state);
-    console.log("EVENT ID", eventId);
-    console.log("FILM FOUND", found[0]);
-    return found[0];
-    // return arr[arr.map(filmInfo => filmInfo.movie).indexOf(film)]._id;
   }
 
   getLogInPage() {
@@ -118,6 +96,16 @@ class MoviePage extends Component {
          </div>
        </div>
       );
+    }
+    if (this.state.error) {
+      return (
+        <div style={{position: "fixed", backgroundColor: "white", zIndex: "1000", height: "100vh", width: "100vw"}}>
+          <h2 style={{ margin: 0, fontFamily:"Ubuntu", position:"relative", top:"175px" }}>Aw, shucks.</h2>
+          <h2 style={{ margin: 0, fontFamily:"Ubuntu", position:"relative", top:"175px" }}>We're experiencing some technical difficulties</h2>
+          <h1 style={{ margin: 0, fontFamily:"Ubuntu", position:"relative", top:"175px", fontSize: "10em", marginTop:"10vh"}}> :( </h1>
+          <Return />
+        </div>
+      )
     }
     return (
       <div>
@@ -145,7 +133,7 @@ class MoviePage extends Component {
             console.log("PARAMS", props.match);
             return (
               <CommentsPage
-                film={this.eventFinderById(props.match.params.filmId)}
+                film={eventFinderById(this.state.films,props.match.params.filmId)}
                 {...props}
               />
             );
