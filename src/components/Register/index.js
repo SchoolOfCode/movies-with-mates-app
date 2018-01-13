@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
-import { orange500, blue500 } from "material-ui/styles/colors";
 import { Link } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 
@@ -124,14 +123,6 @@ class Register extends Component {
           inputStyle={{color: "white"}}
         />
         <br />
-        {/* <TextField
-          name="password"
-          type="password"
-          value={this.state.password}
-          onChange={this.handleInputChange}
-          hintText="Verify your password"
-          underlineFocusStyle={styles.underlineStyle}
-        /> */}
         <LinkContainer to="/" style={{width: "68vw", marginTop:"1vh"}}>
           <RaisedButton label="Register" onClick={this.handleSubmit}
             style={{

@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import Ticket from "../Ticket";
-import SearchBar from "material-ui-search-bar";
-import TextField from "material-ui/TextField";
-import { Route, Switch, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 import CircularProgress from "material-ui/CircularProgress";
 
@@ -39,12 +36,10 @@ class MoviePage extends Component {
     fetch("/api/movies")
       .then(results => results.json())
       .then(data => {
-        console.log("data", data);
         this.setState(prevState => ({
           films: [...prevState.films, ...data.payload],
           loading: false
         }));
-        console.log("state", this.state);
       })
       .catch(error => this.setState({loading: false, error: true})
       );
@@ -56,11 +51,9 @@ class MoviePage extends Component {
       fetch("/api/movies")
         .then(results => results.json())
         .then(data => {
-          console.log("data", data);
           this.setState(prevState => ({
             films: [...data.payload]
           }));
-          console.log("state", this.state);
         })
         .catch(error => console.log(error));
     }
@@ -72,8 +65,6 @@ class MoviePage extends Component {
     fetch(`/api/movies/search/${searchTerm}`)
       .then(response => response.json())
       .then(data => {
-        console.log("SEARCH DATA ***", data);
-        console.log("SEARCH TERM ***", searchTerm);
         this.setState({ films: data.payload });
       })
       .catch(error => console.log(error));
@@ -84,7 +75,6 @@ class MoviePage extends Component {
   }
 
   render() {
-    console.log("MOVIE PAGE STATE", this.state);
     if (this.state.needsToLogIn) {
       return <LoginPage />;
     }

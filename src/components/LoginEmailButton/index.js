@@ -6,7 +6,6 @@ const EmailLoginButton = props => {
     style: {
       background: "#e03c3c",
       color: "white",
-      // width: "80%",
       margin: "10px auto",
       marginBottom: "10px",
       width: "55vw"
@@ -21,18 +20,6 @@ const EmailLoginButton = props => {
       {...{ ...customProps, ...props }}
       onClick={() => window.location.replace("/locallogin")}
     >
-      {/* <img
-        style={{
-          verticalAlign: "middle",
-          height: 26,
-          paddingRight: 9,
-          paddingTop: 15,
-          paddingLeft: 6,
-          float: "left",
-          height: "40%"
-        }}
-        src="envelope.svg"
-      /> */}
       <span style={{ verticalAlign: "middle" }}>
         Login with Email
       </span>
