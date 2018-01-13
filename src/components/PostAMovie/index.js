@@ -116,7 +116,8 @@ class PostAMovie extends Component {
     e.preventDefault();
     fetch("/api/movies", {
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "email": localStorage.getItem("email")
       },
       method: "POST",
       body: JSON.stringify({
