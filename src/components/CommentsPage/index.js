@@ -7,56 +7,14 @@ import ShowComment from "../ShowComment";
 import BackButton from "../BackButton";
 import LoginPage from "../LoginPage";
 
-const tokenChecker = () => {
-  return localStorage.getItem("localToken") ||
-    localStorage.getItem("accessToken") ||
-    localStorage.getItem("email")
-    ? true
-    : false;
-};
-
-const timeStamp = mongooseTimestamp =>
-  `${mongooseTimestamp.slice(
-    0,
-    mongooseTimestamp.indexOf("T")
-  )} ${mongooseTimestamp.slice(
-    mongooseTimestamp.indexOf("T") + 1,
-    mongooseTimestamp.lastIndexOf(":")
-  )}`;
-
-const dateStamp = mongooseTimestamp =>
-  `${mongooseTimestamp.slice(0, mongooseTimestamp.indexOf("T"))}`;
-
-// const saveUserActivity = (array, movieID) => {
-//   console.log("array: ", array);
-//   console.log("stringified movieID: ", JSON.stringify(movieID));
-//   switch (array) {
-//     case null:
-//       console.log("null case");
-//       localStorage.setItem("userActivity", JSON.stringify([movieID]));
-//       break;
-//     default:
-//       console.log("in default");
-//       JSON.parse(array).includes(JSON.stringify(movieID))
-//         ? console.log("this movie is already saved in userActivity")
-//         : localStorage.setItem(
-//             "userActivity",
-//             JSON.stringify([...JSON.parse(array), movieID])
-//           );
-//   }
-// };
+const dateStamp = require("../../tests/frontEndFunctions").dateStamp;
+const timeStamp = require("../../tests/frontEndFunctions").timeStamp;
+const tokenChecker = require("../../tests/frontEndFunctions").tokenChecker;
 
 class CommentsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // film: {
-      //   cinema: "",
-      //   movie: "",
-      //   date: "",
-      //   time: "",
-      //   user: {}
-      // },
       comment: "",
       comments: [],
       fb: false,
@@ -67,7 +25,6 @@ class CommentsPage extends Component {
     this.getComments = this.getComments.bind(this);
     this.addAComment = this.addAComment.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.loggedInWithFB = this.loggedInWithFB.bind(this);
     this.handleAttending = this.handleAttending.bind(this);
     this.handleNotAttending = this.handleNotAttending.bind(this);
     this.getAttendees = this.getAttendees.bind(this);
@@ -142,10 +99,6 @@ class CommentsPage extends Component {
     this.setState({
       [name]: value
     });
-  }
-
-  loggedInWithFB() {
-    return localStorage.getItem("fbId") ? true : false;
   }
 
   handleAttending() {

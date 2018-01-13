@@ -13,14 +13,7 @@ import AppBar from "../AppBar";
 import LoginPage from "../LoginPage";
 import Return from "../ReturnHome";
 
-
-const tokenChecker = () => {
-  return localStorage.getItem("localToken") ||
-    localStorage.getItem("accessToken") ||
-    localStorage.getItem("email")
-    ? true
-    : false;
-};
+const tokenChecker = require("../../tests/frontEndFunctions").tokenChecker;
 
 class UserProfile extends Component {
   constructor(props) {

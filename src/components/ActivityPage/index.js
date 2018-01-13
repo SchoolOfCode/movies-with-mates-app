@@ -8,18 +8,8 @@ import AppBar from "../AppBar";
 import NavBar from "../NavBar";
 import Return from "../ReturnHome";
 
-
-const dateStamp = mongooseTimestamp =>
-  `${mongooseTimestamp.slice(0, mongooseTimestamp.indexOf("T"))}`;
-
-const timeStamp = mongooseTimestamp =>
-  `${mongooseTimestamp.slice(
-    0,
-    mongooseTimestamp.indexOf("T")
-  )} ${mongooseTimestamp.slice(
-    mongooseTimestamp.indexOf("T") + 1,
-    mongooseTimestamp.lastIndexOf(":")
-  )}`;
+const dateStamp = require("../../tests/frontEndFunctions").dateStamp;
+const timeStamp = require("../../tests/frontEndFunctions").timeStamp;
 
 class ActivityPage extends Component {
   constructor(props) {
