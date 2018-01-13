@@ -10,6 +10,7 @@ import Movies from "../Movies";
 import CommentsPage from "../CommentsPage";
 import AppBar from "../AppBar";
 import LoginPage from "../LoginPage";
+import Return from "../ReturnHome";
 
 const tokenChecker = () => {
   return localStorage.getItem("localToken") ||
@@ -26,7 +27,8 @@ class MoviePage extends Component {
       loading: true,
       films: [],
       searchTerm: "",
-      needsToLogIn: false
+      needsToLogIn: false,
+      error: false
     };
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
@@ -49,7 +51,8 @@ class MoviePage extends Component {
         }));
         console.log("state", this.state);
       })
-      .catch(error => console.log(error));
+      .catch(error => this.setState({loading: false, error: true})
+      );
   }
 
   handleSearchChange(e) {
@@ -118,6 +121,16 @@ class MoviePage extends Component {
          </div>
        </div>
       );
+    }
+    if (this.state.error) {
+      return (
+        <div style={{position: "fixed", backgroundColor: "white", zIndex: "1000", height: "100vh", width: "100vw"}}>
+          <h2 style={{ margin: 0, fontFamily:"Ubuntu", position:"relative", top:"175px" }}>Aw, shucks.</h2>
+          <h2 style={{ margin: 0, fontFamily:"Ubuntu", position:"relative", top:"175px" }}>We're experiencing some technical difficulties</h2>
+          <h1 style={{ margin: 0, fontFamily:"Ubuntu", position:"relative", top:"175px", fontSize: "10em", marginTop:"10vh"}}> :( </h1>
+          <Return />
+        </div>
+      )
     }
     return (
       <div>

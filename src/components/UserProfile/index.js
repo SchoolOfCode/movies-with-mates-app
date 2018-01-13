@@ -11,6 +11,8 @@ import Logo from "../Logo";
 import NavBar from "../NavBar";
 import AppBar from "../AppBar";
 import LoginPage from "../LoginPage";
+import Return from "../ReturnHome";
+
 
 const tokenChecker = () => {
   return localStorage.getItem("localToken") ||
@@ -26,7 +28,8 @@ class UserProfile extends Component {
     this.state = {
       name: "",
       picture: "",
-      needsToLogIn: false
+      needsToLogIn: false,
+      error: false
     };
     this.getFB = this.getFB.bind(this);
     this.getInfo = this.getInfo.bind(this);
@@ -63,7 +66,7 @@ class UserProfile extends Component {
           picture
         });
       })
-      .catch(err => console.log(err));
+      .catch(err => this.setState({error: true}))
   }
 
   getLocal() {
@@ -87,6 +90,16 @@ class UserProfile extends Component {
     console.log("UP history", this.props);
     if(this.state.needsToLogIn){
       return (<LoginPage />)
+    }
+    if (this.state.error) {
+      return (
+        <div style={{position: "fixed", backgroundColor: "white", zIndex: "1000", height: "100vh", width: "100vw"}}>
+          <h2 style={{ margin: 0, fontFamily:"Ubuntu", position:"relative", top:"175px" }}>Aw, shucks.</h2>
+          <h2 style={{ margin: 0, fontFamily:"Ubuntu", position:"relative", top:"175px" }}>We're experiencing some technical difficulties</h2>
+          <h1 style={{ margin: 0, fontFamily:"Ubuntu", position:"relative", top:"175px", fontSize: "10em", marginTop:"10vh"}}> :( </h1>
+          <Return />
+        </div>
+      )
     }
     return (
       <div style={{ paddingBottom: "2%" }}>
