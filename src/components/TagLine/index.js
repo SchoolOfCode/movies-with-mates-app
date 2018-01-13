@@ -6,18 +6,14 @@ let word = "Marvel";
 
 let randomWords = ["Marvel", "Mates", "Minions", "Magic", "Monsters", "Magnificence", "Meditation", "Mesmerize", "Mouthwatering", "Mm-Hmm", "My Gosh", "My Word", "Mutuality"]
 
-const getRandomWord = (lastWord) => {
+const getRandomWord = () => {
   let num = Math.floor(Math.random() * 13);
-  // while(num == lastWord){
-  //   num = Math.floor(Math.random() * 10);
-  // }
   word = randomWords[num];
-  // setTimeout(getRandomWord(num), 5000);
 }
 
 class TagLine extends Component {
   componentWillMount(){
-    getRandomWord(0)
+    getRandomWord()
   }
   render(){
   return (

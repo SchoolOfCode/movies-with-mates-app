@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { Col, Row } from "react-bootstrap";
-import { Card, CardHeader, CardText } from "material-ui/Card";
+import { Card, CardText } from "material-ui/Card";
 import Avatar from "material-ui/Avatar";
 
 import "./ShowComment.css";
@@ -26,6 +25,7 @@ const ShowComment = props => {
             paddingBottom: "3%",
             marginBottom: "-10%"
           }}
+          key={idx}
         >
           <div
             className="userInfo"
@@ -60,7 +60,6 @@ const ShowComment = props => {
               className="chatMessage"
               style={{
                 position: "relative",
-                // display: "inline",
                 top: "-77px",
                 left: "22%",
                 width: "70vw",
@@ -102,7 +101,6 @@ const ShowComment = props => {
               }}
             >
               {props.timestamp(comment.createdAt)}
-              {/* comment.createdAt */}
             </h6>
           </div>
         </div>

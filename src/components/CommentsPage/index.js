@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+
 import Ticket from "../Ticket";
 import AppBar from "../AppBar";
 import AddComment from "../AddComment";
@@ -55,11 +56,9 @@ class CommentsPage extends Component {
     fetch(`/api/movies/${this.props.film._id}/comments`)
       .then(res => res.json())
       .then(data => {
-        console.log("comments fetch", data);
         this.setState(prevState => ({
           comments: [...data.payload]
         }));
-        console.log("COMMENTS state: ", this.state);
       });
   }
 
@@ -80,7 +79,6 @@ class CommentsPage extends Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log("data from addAComment", data);
         let newComment = data.comment;
         let picture = data.picture;
         this.setState(prevState => ({
@@ -112,7 +110,6 @@ class CommentsPage extends Component {
       })
     })
       .then(res => res.json())
-      .then(data => console.log(data))
       .then(() => this.getAttendees());
   }
   handleNotAttending() {
@@ -126,7 +123,6 @@ class CommentsPage extends Component {
       })
     })
       .then(res => res.json())
-      .then(data => console.log(data))
       .then(() => this.getAttendees());
   }
 
@@ -134,13 +130,11 @@ class CommentsPage extends Component {
     fetch(`/api/movies/${this.props.film._id}/join`)
       .then(res => res.json())
       .then(data => {
-        console.log("attendees", data);
         data.attendees && this.setState({ attendees: data.attendees });
       });
   }
 
   render() {
-    console.log("COMMENTS PAGE PROPS", this.props);
     if (this.state.needsToLogIn) {
       return <LoginPage />;
     }
@@ -201,7 +195,7 @@ class CommentsPage extends Component {
                 left: "22%",
                 top: "3px"
               }}
-              class="fa fa-times fa-2x"
+              className="fa fa-times fa-2x"
               onClick={this.handleNotAttending}
               aria-hidden="true"
             />
@@ -214,7 +208,7 @@ class CommentsPage extends Component {
                 top: "3px"
               }}
               onClick={this.handleAttending}
-              class="fa fa-check fa-2x"
+              className="fa fa-check fa-2x"
               aria-hidden="true"
             />
           </div>
@@ -236,9 +230,7 @@ class CommentsPage extends Component {
                   borderRadius: "100%",
                   height: "5vh",
                   position: "relative",
-                  // display: "inline",
                   marginRight: "2%"
-                  // left: "-38%"
                 }}
                 key={idx}
               />

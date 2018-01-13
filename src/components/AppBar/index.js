@@ -24,17 +24,6 @@ const AppBar = props => {
         whiteSpace:"nowrap" }}>
         {props.title}
       </h3>
-      {/* <img
-        onClick={() => window.location.replace("/profile")}
-        src="/profile.svg"
-        style={{
-          width: "8%",
-          height: "4%",
-          position: "absolute",
-          right: "2%",
-          top: "2%"
-        }}
-      /> */}
     </div>
   );
 };

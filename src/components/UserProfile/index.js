@@ -49,7 +49,6 @@ class UserProfile extends Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log("data from user fetch", data);
         let fullname = data.payload.name;
         let spaceIndex = fullname.indexOf(" ");
         let name = fullname.slice(0, spaceIndex);
@@ -80,7 +79,6 @@ class UserProfile extends Component {
       });
   }
   render() {
-    console.log("UP history", this.props);
     if(this.state.needsToLogIn){
       return (<LoginPage />)
     }
@@ -131,10 +129,6 @@ class UserProfile extends Component {
             }
           />
         </div>
-
-        {/* <FindAMovieButton history={this.props.history} />
-        <ActivityButton history={this.props.history} /> */}
-
         <div style={{position:"relative", top: "5vh"}}>
           <SocialLoginButton style={{
             background: "#e03c3c",
@@ -176,15 +170,3 @@ class UserProfile extends Component {
 }
 
 export default UserProfile;
-
-/**
-<form onSubmit={(e) => {
-  e.preventDefault();
-  console.log("form event", document.getElementById("userImgUpload").value)
-  this.setState({picture: document.getElementById("userImgUpload").value })
-
-}}>
-  <input type="file" id="userImgUpload" name="picture" accept="image/*" />
-  <input type="submit"/>
-</form>
-**/

@@ -13,6 +13,7 @@ const Ticket = props => (
       style={{ position: "relative", left: "-30%", top: "6vh" }}
       src={props.user.picture}
       id="img"
+      alt="user"
     />
     <div
       className="userName"
