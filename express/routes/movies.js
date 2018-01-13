@@ -150,7 +150,7 @@ router.post("/:id/join", (req, res, next) => {
         subject: "New MWM notification",
         text: `You are going to see the following movie: ${
           movie.movie
-        } ! Happy mating.`
+        } !`
       });
       return res.json({ payload: movie });
     });
@@ -188,7 +188,7 @@ router.post("/", (req, res) => {
     sendEmail({
       to: req.headers.email,
       subject: "New MWM notification",
-      text: "You just created a movie event on the MWM app! Happy mating."
+      text: "You just created a movie event on the MWM app!"
     });
     return res.json({ message: "Film event" });
   });
