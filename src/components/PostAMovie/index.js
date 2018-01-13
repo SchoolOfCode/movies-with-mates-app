@@ -9,6 +9,7 @@ import Listings from "../Listings";
 import PostMovieTicket from "../PostMovieTicket";
 import TodayTomorrowContainer from "../TodayTomorrowContainer";
 import NavBar from "../NavBar";
+import BackButton from "../BackButton";
 
 // const getDateDisplay = today => {
 //   let date = new Date();
@@ -53,6 +54,7 @@ class PostAMovie extends Component {
     this.onTodayClick = this.onTodayClick.bind(this);
     this.onTomorrowClick = this.onTomorrowClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleBackClick = this.handleBackClick.bind(this);
   }
   //this needs refactoring
   //
@@ -259,9 +261,44 @@ class PostAMovie extends Component {
         time: showing
       }
     });
+    localStorage.setItem("odeon", this.state.odeonClicked)
+  }
+  handleBackClick(){
+    console.log("Im clicking");
+    this.setState({
+      showTicket: false
+    })
   }
 
+
   render() {
+    if(this.state.showTicket){
+      return (
+        <div style={{ paddingBottom: "2%", paddingTop: "14%" }}>
+        <BackButton onClick={this.handleBackClick} style={{
+          height: "25px",
+          width: "25px",
+          position: "absolute",
+          top: "15px",
+          left: "20px",
+          zIndex: "101"
+        }}
+        history={this.props.history}
+        handleClick={this.handleBackClick}/>
+          <AppBar title="Post a Movie" url="/movies" />
+          <PostMovieTicket
+            handleCinemaChange={this.handleCinemaChange}
+            handleMovieChange={this.handleMovieChange}
+            handleDateChange={this.handleDateChange}
+            handleTimeChange={this.handleTimeChange}
+            handleSubmit={this.handleSubmit}
+            handleChange={this.handleChange}
+            selectedFilm={this.state.selectedFilm}
+          />
+        </div>
+    )
+
+    }
     return (
       <div style={{ paddingBottom: "2%", paddingTop: "14%" }}>
         <AppBar title="Post a Movie" url="/movies" />
@@ -307,19 +344,6 @@ class PostAMovie extends Component {
             <Listings
               listings={this.state.listings}
               onShowingClick={this.onShowingClick}
-            />
-          ) : (
-            ""
-          )}
-          {this.state.showTicket ? (
-            <PostMovieTicket
-              handleCinemaChange={this.handleCinemaChange}
-              handleMovieChange={this.handleMovieChange}
-              handleDateChange={this.handleDateChange}
-              handleTimeChange={this.handleTimeChange}
-              handleSubmit={this.handleSubmit}
-              handleChange={this.handleChange}
-              selectedFilm={this.state.selectedFilm}
             />
           ) : (
             ""
