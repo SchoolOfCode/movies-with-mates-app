@@ -273,7 +273,7 @@
   }
 }
 
-@media screen and (min-width: 768px) and (max-height: 1024px) {
+@media screen and (min-width: 768px) and (max-width: 769px) and (max-height: 1024px) {
   .bgColor {
     width: 100vw;
     background-color: black;
@@ -303,7 +303,7 @@
   }
 }
 
-@media screen and (min-width: 768px) and (min-height: 1024px) and (max-height: 1920px) {
+@media screen and (min-width: 769px) and (min-height: 900px) {
   .bgColor {
     background-color: #ffeb3b0a;
     height: 100%;
