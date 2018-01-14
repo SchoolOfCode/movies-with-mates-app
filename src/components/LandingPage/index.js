@@ -10,54 +10,24 @@ import './LandingPage.css';
 
 const LandingPage = props => {
   return (
-    <div>
+    <div style={{ height: '100vh', overflow: 'hidden' }}>
       <div
         className="landingAnimation"
         style={{
           position: 'absolute',
-          height: '100vh',
+          height: '100%',
           width: '100vw',
           backgroundColor: 'white',
           zIndex: '30'
         }}
       >
-        <div style={{ position: 'relative', top: '25vh' }}>
+        <div style={{ position: 'relative', top: '30vh' }}>
           <img
-            src={'/ticket-v5.svg'}
-            style={{
-              zIndex: '10',
-              position: 'relative',
-              top: '13vh',
-              left: '23%',
-              height: '50%',
-              width: '50%',
-              transform: 'rotate(-45deg)'
-            }}
+            src={'/logo.svg'}
+            alt="mwm-logo"
+            style={{ position: 'relative', width: '55%' }}
           />
-          <img
-            src={'/ticket-v6.svg'}
-            style={{
-              zIndex: '20',
-              position: 'relative',
-              top: '18vh',
-              left: '-23%',
-              height: '50%',
-              width: '50%'
-            }}
-          />
-          <p
-            style={{
-              color: 'white',
-              position: 'absolute',
-              top: '129px',
-              left: '112px',
-              fontSize: '5.75em',
-              zIndex: '25'
-            }}
-          >
-            M W M
-          </p>
-          <div style={{ position: 'relative', top: '20vh' }}>
+          <div style={{ position: 'relative', top: '1vh' }}>
             <h2
               style={{
                 position: 'relative',
@@ -73,46 +43,18 @@ const LandingPage = props => {
           </div>
         </div>
       </div>
-      <div style={{ width: '100vw', backgroundColor: 'black' }}>
-        <img className="background" src={'/cinema-room.jpg'} />
-        <div className="mwmLogo">
+      <div className="bgColor">
+        <img
+          className="background"
+          alt="background"
+          src={'/cinema-room2.png'}
+        />
+        <div className="container">
           <img
-            src={'/ticket-v5.svg'}
-            style={{
-              zIndex: '1',
-              position: 'relative',
-              top: '13vh',
-              left: '23%',
-              height: '50%',
-              width: '50%',
-              transform: 'rotate(-45deg)'
-            }}
+            src={'/logo.svg'}
+            alt="mwm-logo"
+            style={{ position: 'relative', top: '8vh', width: '100%' }}
           />
-          <img
-            src={'/ticket-v6.svg'}
-            style={{
-              zIndex: '2',
-              position: 'relative',
-              top: '18vh',
-              left: '-23%',
-              height: '50%',
-              width: '50%'
-            }}
-          />
-        </div>
-        <div style={{ zIndex: '2' }}>
-          <p
-            style={{
-              color: 'white',
-              position: 'absolute',
-              top: '129px',
-              left: '112px',
-              fontSize: '5.75em',
-              zIndex: '25'
-            }}
-          >
-            M W M
-          </p>
         </div>
         <div className="tagLine">
           <TagLine style={{ fontFamily: 'Roboto' }} />
@@ -120,7 +62,10 @@ const LandingPage = props => {
         <div className="loginButtons">
           <FBLoginButton history={props.history} />
           <LoginEmailButton />
-          <RegisterLink />
+          <RegisterLink
+            className="registerLink"
+            style={{ backgroundColor: 'black' }}
+          />
         </div>
       </div>
     </div>

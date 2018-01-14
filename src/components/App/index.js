@@ -1,17 +1,17 @@
-import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
 
-import LandingPage from "../LandingPage";
-import Register from "../Register";
-import LocalLogin from "../LocalLogin";
-import UserProfile from "../UserProfile";
-import MoviePage from "../MoviePage";
-import PostAMovie from "../PostAMovie";
-import ActivityPage from "../ActivityPage";
-import GoingPage from "../GoingPage";
-import NavBar from "../NavBar";
+import LandingPage from '../LandingPage';
+import Register from '../Register';
+import LocalLogin from '../LocalLogin';
+import UserProfile from '../UserProfile';
+import MoviePage from '../MoviePage';
+import PostAMovie from '../PostAMovie';
+import ActivityPage from '../ActivityPage';
+import GoingPage from '../GoingPage';
+import NavBar from '../NavBar';
 
-import "./App.css";
+import './App.css';
 
 /**9688 is birmingham new street odeon, 8672 is cineworld broad street*/
 
@@ -32,7 +32,7 @@ class App extends Component {
     fetch(url)
       .then(res => res.json())
       .then(data => {
-        if (day === "0") {
+        if (day === '0') {
           today[id] = data.listings;
           all[day] = { ...today };
         }
@@ -48,24 +48,24 @@ class App extends Component {
   componentDidMount() {
     Promise.all([
       this.fetchCinemaListings(
-        "https://api.cinelist.co.uk/get/times/cinema/9688",
-        "9688",
-        "0"
+        'https://api.cinelist.co.uk/get/times/cinema/9688',
+        '9688',
+        '0'
       ),
       this.fetchCinemaListings(
-        "https://api.cinelist.co.uk/get/times/cinema/8672",
-        "8672",
-        "0"
+        'https://api.cinelist.co.uk/get/times/cinema/8672',
+        '8672',
+        '0'
       ),
       this.fetchCinemaListings(
-        "https://api.cinelist.co.uk/get/times/cinema/9688?day=1",
-        "9688",
-        "1"
+        'https://api.cinelist.co.uk/get/times/cinema/9688?day=1',
+        '9688',
+        '1'
       ),
       this.fetchCinemaListings(
-        "https://api.cinelist.co.uk/get/times/cinema/8672?day=1",
-        "8672",
-        "1"
+        'https://api.cinelist.co.uk/get/times/cinema/8672?day=1',
+        '8672',
+        '1'
       )
     ]);
   }
@@ -74,8 +74,8 @@ class App extends Component {
       <div
         className="App"
         style={{
-          minHeight: "100vh",
-          padding: "0"
+          minHeight: '100vh',
+          padding: '0'
         }}
       >
         <Switch>
@@ -94,10 +94,10 @@ class App extends Component {
           <Route path="/going" component={GoingPage} />
         </Switch>
         <Route
-          path={["/profile", "/create", "/activity", "/going"]}
+          path={['/profile', '/create', '/activity', '/going']}
           component={NavBar}
         />
-        <Route exact path={"/movies"} component={NavBar} />
+        <Route exact path={'/movies'} component={NavBar} />
       </div>
     );
   }
