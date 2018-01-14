@@ -37,7 +37,6 @@ class PostAMovie extends Component {
 
   handleChange(value, type) {
     this.setState((prevState, props) => {
-      console.log(value);
       return {
         selectedFilm: {
           ...prevState.selectedFilm,
@@ -153,9 +152,6 @@ class PostAMovie extends Component {
   }
 
   onShowingClick(index, showing, film) {
-    console.log(
-      `button ${index} was clicked for the ${showing} showing of ${film}`
-    );
     this.setState({
       showTicket: true,
       selectedFilm: {
@@ -170,7 +166,6 @@ class PostAMovie extends Component {
     localStorage.setItem("odeon", this.state.odeonClicked)
   }
   handleBackClick(){
-    console.log("Im clicking");
     this.setState({
       showTicket: false
     })
@@ -212,9 +207,7 @@ class PostAMovie extends Component {
           style={{
             overflow: "scroll",
             position: "relative",
-            // top: "2vh",
             height: "82vh"
-            // paddingBottom: "8%"
           }}
         >
           <div className="postMovieSummary"
@@ -259,110 +252,5 @@ class PostAMovie extends Component {
     );
   }
 }
-/**
 
-{this.state.odeonClicked ? <OdeonListings listings={this.state.odeon} onShowingClick={this.onShowingClick} /> : ""}
-{this.state.cineworldClicked ? <CineworldListings listings={this.state.cineworld} onShowingClick={this.onShowingClick}/> : ""}
-
-
-// this.setState((prevState) => ({
-//   odeon: [...prevState.odeon],
-//   odeonClicked: false,
-//   cineworld: cineworldCount === 1 ? [...prevState.cineworld, ...this.props.listings[8672]] : [...prevState.cineworld],
-//   cineworldClicked: !prevState.cineworldClicked,
-//   showTicket: prevState.showTicket,
-//   selectedFilm: {...prevState.selectedFilm}
-// }))
-
-// this.setState((prevState) => ({
-//   odeon: odeonCount === 1 ? [...prevState.odeon, ...this.props.listings[9688]] : [...prevState.odeon],
-//   odeonClicked: !prevState.odeonClicked,
-//   cineworld: [...prevState.cineworld],
-//   cineworldClicked: false,
-//   showTicket: prevState.showTicket,
-//   selectedFilm: {...prevState.selectedFilm}
-// }))
-
-let resetState = new Promise((resolve,reject) => {
-  if(odeonCount > 1) {
-    resolve(this.state.today ? this.onTodayClick() : this.onTomorrowClick())
-  }
-})
-resetState.then(
-  this.setState({
-    listings: cineworldCount === 1 ? [...this.state.listings[8672]] : [...this.state.listings],
-    seeListings: true
-  })
-)
-
-onOdeonClick(){
-  odeonCount++;
-  console.log("odeon is clicked");
-  if(this.state.today && cineworldCount > 1){
-    this.onTodayClick( () => {
-      this.setState({
-        listings: odeonCount === 1 ? [...this.state.listings[9688]] : [...this.state.listings],
-        seeListings: true
-      })
-    }
-    )
-  }
-  this.onTomorrowClick( () => {
-    this.setState({
-      listings: odeonCount === 1 ? [...this.state.listings[9688]] : [...this.state.listings],
-      seeListings: true
-    })
-  })
-}
-
-onCineworldClick(){
-  cineworldCount++;
-  console.log("cineworld is clicked")
-  if(this.state.today){
-    this.onTodayClick( () => {
-      this.setState({
-        listings: cineworldCount === 1 ? [...this.state.listings[8672]] : [...this.state.listings],
-        seeListings: true
-      })
-    }
-    )
-  }
-  this.onTomorrowClick( () => {
-      this.setState({
-        listings: cineworldCount === 1 ? [...this.state.listings[8672]] : [...this.state.listings],
-        seeListings: true
-      })
-    }
-    )
-}
-
-onCineworldClick(){
-  cineworldCount++;
-  console.log("cineworld is clicked")
-  if(this.state.today) {
-    this.setState({
-      listings: this.props.listings[0]
-    },
-    () => {
-    this.setState({
-      listings: cineworldCount === 1 ? [...this.state.listings[8672]] : [...this.state.listings],
-      seeListings: true
-    })
-  }
-  )
-  }
-  this.setState({
-    listings: this.props.listings[1]
-  }, () => {
-
-  this.setState({
-    listings: cineworldCount === 1 ? [...this.state.listings[8672]] : [...this.state.listings],
-    seeListings: true
-  })
-  }
-  )
-}
-
-
-**/
 export default PostAMovie;

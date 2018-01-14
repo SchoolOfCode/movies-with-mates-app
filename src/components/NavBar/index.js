@@ -1,25 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
-import { LinkContainer } from "react-router-bootstrap";
 import {
   BottomNavigation,
   BottomNavigationItem
 } from "material-ui/BottomNavigation";
 import FontIcon from "material-ui/FontIcon";
 import Paper from "material-ui/Paper";
-import { Search } from "material-ui-icons";
 
 import "./NavBar.css";
 
-class NavBar extends Component {
-  state = {
-    selectedIndex: 0
-  };
+const NavBar = (props) => {
 
-  select = index => this.setState({ selectedIndex: index });
-
-  render() {
     return (
       <Paper
         zDepth={1}
@@ -58,5 +50,5 @@ class NavBar extends Component {
       </Paper>
     );
   }
-}
+
 export default NavBar;

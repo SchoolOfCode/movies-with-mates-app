@@ -8,9 +8,7 @@ import Ticket from "../Ticket";
 import BackButton from "../BackButton";
 import Return from "../ReturnHome";
 
-
-const dateStamp = mongooseTimestamp =>
-  `${mongooseTimestamp.slice(0, mongooseTimestamp.indexOf("T"))}`;
+const dateStamp = require("../../tests/frontEndFunctions").dateStamp
 
 class GoingPage extends Component {
   constructor(props) {
@@ -49,6 +47,7 @@ class GoingPage extends Component {
                 state: { prevPath: this.props.location.pathname }
               }}
               style={{ textDecoration: "none" }}
+              key={idx}
             >
               <Ticket
                 index={idx}

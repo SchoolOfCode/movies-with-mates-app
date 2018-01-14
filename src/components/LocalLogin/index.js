@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
-import { orange500, blue500 } from "material-ui/styles/colors";
-import Logo from "../Logo";
 import { LinkContainer } from "react-router-bootstrap";
 
+import Logo from "../Logo";
 import TagLine from "../TagLine";
 
 class LocalLogin extends Component {
@@ -49,8 +48,6 @@ class LocalLogin extends Component {
     })
       .then(response => response.json())
       .then(value => {
-        console.log("before this.setState: loggedIn", this.state.loggedIn);
-        console.log("value", value);
         if (value.message === "ok") {
           this.setState({
             loggedIn: true

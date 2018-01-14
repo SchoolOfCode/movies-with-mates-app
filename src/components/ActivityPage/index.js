@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import localStorage from "localStorage";
+
+import { Link } from "react-router-dom";
 import ClockIcon from "material-ui/svg-icons/device/access-time";
 
 import Ticket from "../Ticket";
@@ -25,18 +26,10 @@ class ActivityPage extends Component {
     fetch(`/api/movies/thing/${localStorage.getItem("userId")}`)
       .then(res => res.json())
       .then(data => {
-        console.log("DATA FROM FETCH", data);
-
         let theirs = data.comments.filter(c =>
           data.theirEvents.includes(c.movie)
         );
-
-        console.log("THEIRS ARRAY ", theirs);
-
         let going = data.comments.filter(c => data.going.includes(c.movie));
-
-        console.log("GOING ARRAY", going);
-
         this.setState({
           theirs,
           going
@@ -87,13 +80,14 @@ class ActivityPage extends Component {
             marginRight: -20
           }}
         >
-          {this.state.going.map(c => {
+          {this.state.going.map((c, i) => {
             return (
               <Link
                 to={{
                   pathname: `/movies/${c.movie}`,
                   state: { prevPath: this.props.location.pathname }
                 }}
+                key={i}
               >
                 <div style={{ marginBottom: "3%", width: "100vw" }}>
                   <div style={{ position: "relative", width: "85%" }}>
@@ -168,13 +162,14 @@ class ActivityPage extends Component {
               </Link>
             );
           })}
-          {this.state.theirs.map(c => {
+          {this.state.theirs.map((c,i) => {
             return (
               <Link
                 to={{
                   pathname: `/movies/${c.movie}`,
                   state: { prevPath: this.props.location.pathname }
                 }}
+                key={i}
               >
                 <div style={{ marginBottom: "3%", width: "100vw" }}>
                   <div style={{ position: "relative", width: "85%" }}>
