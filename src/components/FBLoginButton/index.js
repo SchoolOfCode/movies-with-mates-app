@@ -13,13 +13,9 @@ const responseFacebook = response => {
     method: "POST",
     body: JSON.stringify({
       name: response.name,
-<<<<<<< HEAD
       local: {
         email: response.email
       },
-=======
-      local: {email: response.email},
->>>>>>> b60183a5903c631cddf4fe69870fd5447e88bee1
       tokens: {
         accessToken: response.accessToken
       },
@@ -32,17 +28,7 @@ const responseFacebook = response => {
   })
     .then(res => res.json())
     .then(data => {
-<<<<<<< HEAD
-      console.log("get back from post request", data);
-      let fbAccessToken = data.userAccessToken;
-      let fbId = data.fbId;
-      let picture = data.picture;
-      let userId = data.userId;
-      let displayName = data.displayName;
-      let email = data.email;
-=======
       let { fbAccessToken, fbId, picture, userId, displayName, email } = data;
->>>>>>> b60183a5903c631cddf4fe69870fd5447e88bee1
       localStorage.setItem("accessToken", fbAccessToken);
       localStorage.setItem("fbId", fbId);
       localStorage.setItem("picture", picture);

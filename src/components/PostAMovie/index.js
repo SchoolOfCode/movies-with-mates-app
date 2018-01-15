@@ -51,11 +51,7 @@ class PostAMovie extends Component {
     fetch("/api/movies", {
       headers: {
         "Content-Type": "application/json",
-<<<<<<< HEAD
         email: localStorage.getItem("email")
-=======
-        "email": localStorage.getItem("email")
->>>>>>> b60183a5903c631cddf4fe69870fd5447e88bee1
       },
       method: "POST",
       body: JSON.stringify({
@@ -167,29 +163,31 @@ class PostAMovie extends Component {
         time: showing
       }
     });
-    localStorage.setItem("odeon", this.state.odeonClicked)
+    localStorage.setItem("odeon", this.state.odeonClicked);
   }
-  handleBackClick(){
+  handleBackClick() {
     this.setState({
       showTicket: false
-    })
+    });
   }
 
-
   render() {
-    if(this.state.showTicket){
+    if (this.state.showTicket) {
       return (
         <div style={{ paddingBottom: "2%", paddingTop: "14%" }}>
-        <BackButton onClick={this.handleBackClick} style={{
-          height: "25px",
-          width: "25px",
-          position: "absolute",
-          top: "15px",
-          left: "20px",
-          zIndex: "101"
-        }}
-        history={this.props.history}
-        handleClick={this.handleBackClick}/>
+          <BackButton
+            onClick={this.handleBackClick}
+            style={{
+              height: "25px",
+              width: "25px",
+              position: "absolute",
+              top: "15px",
+              left: "20px",
+              zIndex: "101"
+            }}
+            history={this.props.history}
+            handleClick={this.handleBackClick}
+          />
           <AppBar title="Post a Movie" url="/movies" />
           <PostMovieTicket
             handleCinemaChange={this.handleCinemaChange}
@@ -201,8 +199,7 @@ class PostAMovie extends Component {
             selectedFilm={this.state.selectedFilm}
           />
         </div>
-    )
-
+      );
     }
     return (
       <div style={{ paddingBottom: "2%", paddingTop: "14%" }}>
