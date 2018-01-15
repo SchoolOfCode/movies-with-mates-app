@@ -1,20 +1,15 @@
 import React from "react";
-import Ticket from "../Ticket";
-import NavBar from "../NavBar";
 
 import TextField from "material-ui/TextField";
 import SearchIcon from "material-ui/svg-icons/action/search";
 import UpArrowIcon from "material-ui/svg-icons/navigation/subdirectory-arrow-right";
 import { Link } from "react-router-dom";
-import { Grid, Row, Col } from "react-bootstrap";
 
+import Ticket from "../Ticket";
+import NavBar from "../NavBar";
 import "./Movies.css";
 
 let otherStyle = {
-	// lineHeight: "36px",
-	// width: "75%",
-	// height: "7%",
-	// marginTop: 50,
 	errorStyle: {
 		color: '#F94548'
 	},
@@ -33,11 +28,9 @@ let otherStyle = {
 	}
 };
 
-const dateStamp = mongooseTimestamp =>
-  `${mongooseTimestamp.slice(0, mongooseTimestamp.indexOf("T"))}`;
+const dateStamp = require("../../tests/frontEndFunctions").dateStamp;
 
 const Movies = props => {
-  console.log("Movie props", props);
   return (
     <div className="pageContainer">
       <div
@@ -57,7 +50,6 @@ const Movies = props => {
         <TextField
 					onKeyPress={e => {
 						if (e.key === 'Enter') {
-							console.log('Enter key pressed');
 							props.handleSearch();
 						}
 					}}
@@ -131,6 +123,7 @@ const Movies = props => {
                   state: { prevPath: props.location.pathname }
                 }}
                 style={{ textDecoration: "none" }}
+								key={idx}
               >
                 <Ticket
                   index={idx}

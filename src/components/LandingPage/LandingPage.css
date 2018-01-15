@@ -65,3 +65,23 @@
     top: 48vh;
   }
 }
+
+
+/* Animations */
+
+.landingAnimation {
+  -webkit-animation: fadeout 2s 2s linear forwards;
+  animation: fadeout 2s 2s linear forwards;
+}
+
+@-webkit-keyframes fadeout {
+  0%, 50% {opacity: 1;}
+  100% {opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {z-index: 30;}
+  0%, 50% {opacity: 1;}
+  100% {opacity: 0;}
+  to {z-index: 0;}
+}

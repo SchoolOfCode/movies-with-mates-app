@@ -9,10 +9,7 @@ const CineworldButton = props => {
       background: "#e03c3c",
       color: "white",
       width: "35%",
-      // marginBottom: "20px",
-      // marginTop: 40,
-      position: "relative",
-      // top: -110
+      position: "relative"
     },
     activeStyle: {
       background: "#962727"
@@ -25,7 +22,7 @@ const CineworldButton = props => {
       onClick={props.onClick}
     >
       <span style={{ verticalAlign: "middle"}}>
-        Cineworld listings
+        Cineworld
       </span>
     </SocialLoginButton>
   );

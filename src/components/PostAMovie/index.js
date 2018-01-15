@@ -9,26 +9,9 @@ import Listings from "../Listings";
 import PostMovieTicket from "../PostMovieTicket";
 import TodayTomorrowContainer from "../TodayTomorrowContainer";
 import NavBar from "../NavBar";
+import BackButton from "../BackButton";
 
-// const getDateDisplay = today => {
-//   let date = new Date();
-//   let dd = today ? date.getDate() : date.getDate() + 1;
-//   let mm = date.getMonth() + 1;
-//   let yyyy = date.getFullYear();
-//   dd = dd < 10 ? `0${dd}` : dd;
-//   mm = mm < 10 ? `0${mm}` : mm;
-//   return `${dd}/${mm}/${yyyy}`;
-// };
-
-const getDateDB = today => {
-  let date = new Date();
-  let dd = today ? date.getDate() : date.getDate() + 1;
-  let mm = date.getMonth() + 1;
-  let yyyy = date.getFullYear();
-  dd = dd < 10 ? `0${dd}` : dd;
-  mm = mm < 10 ? `0${mm}` : mm;
-  return `${yyyy}-${mm}-${dd}`;
-};
+const getDateDB = require("../../tests/frontEndFunctions").getDateDB;
 
 class PostAMovie extends Component {
   constructor(props) {
@@ -42,10 +25,6 @@ class PostAMovie extends Component {
       seeCinemas: false,
       seeListings: false
     };
-    this.handleCinemaChange = this.handleCinemaChange.bind(this);
-    this.handleMovieChange = this.handleMovieChange.bind(this);
-    this.handleDateChange = this.handleDateChange.bind(this);
-    this.handleTimeChange = this.handleTimeChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onOdeonClick = this.onOdeonClick.bind(this);
     this.onCineworldClick = this.onCineworldClick.bind(this);
@@ -53,12 +32,11 @@ class PostAMovie extends Component {
     this.onTodayClick = this.onTodayClick.bind(this);
     this.onTomorrowClick = this.onTomorrowClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleBackClick = this.handleBackClick.bind(this);
   }
-  //this needs refactoring
-  //
+
   handleChange(value, type) {
     this.setState((prevState, props) => {
-      console.log(value);
       return {
         selectedFilm: {
           ...prevState.selectedFilm,
@@ -68,56 +46,16 @@ class PostAMovie extends Component {
     });
   }
 
-  handleCinemaChange(e) {
-    this.setState({
-      selectedFilm: {
-        cinema: e.target.value,
-        movie: this.state.selectedFilm.movie,
-        date: this.state.selectedFilm.date,
-        time: this.state.selectedFilm.time
-      }
-    });
-  }
-
-  handleMovieChange(e) {
-    this.setState({
-      selectedFilm: {
-        cinema: this.state.selectedFilm.cinema,
-        movie: e.target.value,
-        date: this.state.selectedFilm.date,
-        time: this.state.selectedFilm.time
-      }
-    });
-  }
-
-  handleDateChange(e) {
-    this.setState({
-      selectedFilm: {
-        cinema: this.state.selectedFilm.cinema,
-        movie: this.state.selectedFilm.movie,
-        date: e.target.value,
-        time: this.state.selectedFilm.time
-      }
-    });
-  }
-  handleTimeChange(e) {
-    this.setState({
-      selectedFilm: {
-        cinema: this.state.selectedFilm.cinema,
-        movie: this.state.selectedFilm.movie,
-        date: this.state.selectedFilm.date,
-        time: e.target.value
-      }
-    });
-  }
-  // this sends off DD/MM/YYYY to the back end but if we want to look into deleting expired tickets
-  // I think we need to send off a date object and account for this in the schema?
   handleSubmit(e) {
     e.preventDefault();
     fetch("/api/movies", {
       headers: {
         "Content-Type": "application/json",
+<<<<<<< HEAD
         email: localStorage.getItem("email")
+=======
+        "email": localStorage.getItem("email")
+>>>>>>> b60183a5903c631cddf4fe69870fd5447e88bee1
       },
       method: "POST",
       body: JSON.stringify({
@@ -138,11 +76,6 @@ class PostAMovie extends Component {
   }
 
   onOdeonClick() {
-    // setTimeout(
-    //   () => console.log("state after odeon click", this.state.listings),
-    //   1000
-    // );
-
     if (this.state.today) {
       this.setState({
         listings: [...this.props.listings[0][9688]],
@@ -160,11 +93,6 @@ class PostAMovie extends Component {
   }
 
   onCineworldClick() {
-    // setTimeout(
-    //   () => console.log("state after cineworld click", this.state.listings),
-    //   1000
-    // );
-
     if (this.state.today) {
       this.setState({
         listings: [...this.props.listings[0][8672]],
@@ -182,14 +110,6 @@ class PostAMovie extends Component {
   }
 
   onTodayClick() {
-    // setTimeout(
-    //   () => console.log("state after today click", this.state.listings),
-    //   1000
-    // );
-    // console.log(
-    //   "today clicked, this.props.listings[0]",
-    //   this.props.listings[0]
-    // );
     if (this.state.odeonClicked) {
       this.setState({
         listings: this.props.listings[0][9688],
@@ -213,15 +133,6 @@ class PostAMovie extends Component {
   }
 
   onTomorrowClick() {
-    // setTimeout(
-    //   () => console.log("state after tomorrow click", this.state.listings),
-    //   1000
-    // );
-    // console.log(
-    //   "tomorrow clicked, this.props.listings[1]",
-    //   this.props.listings[1]
-    // );
-
     if (this.state.odeonClicked) {
       this.setState({
         listings: this.props.listings[1][9688],
@@ -245,9 +156,6 @@ class PostAMovie extends Component {
   }
 
   onShowingClick(index, showing, film) {
-    console.log(
-      `button ${index} was clicked for the ${showing} showing of ${film}`
-    );
     this.setState({
       showTicket: true,
       selectedFilm: {
@@ -259,9 +167,43 @@ class PostAMovie extends Component {
         time: showing
       }
     });
+    localStorage.setItem("odeon", this.state.odeonClicked)
+  }
+  handleBackClick(){
+    this.setState({
+      showTicket: false
+    })
   }
 
+
   render() {
+    if(this.state.showTicket){
+      return (
+        <div style={{ paddingBottom: "2%", paddingTop: "14%" }}>
+        <BackButton onClick={this.handleBackClick} style={{
+          height: "25px",
+          width: "25px",
+          position: "absolute",
+          top: "15px",
+          left: "20px",
+          zIndex: "101"
+        }}
+        history={this.props.history}
+        handleClick={this.handleBackClick}/>
+          <AppBar title="Post a Movie" url="/movies" />
+          <PostMovieTicket
+            handleCinemaChange={this.handleCinemaChange}
+            handleMovieChange={this.handleMovieChange}
+            handleDateChange={this.handleDateChange}
+            handleTimeChange={this.handleTimeChange}
+            handleSubmit={this.handleSubmit}
+            handleChange={this.handleChange}
+            selectedFilm={this.state.selectedFilm}
+          />
+        </div>
+    )
+
+    }
     return (
       <div style={{ paddingBottom: "2%", paddingTop: "14%" }}>
         <AppBar title="Post a Movie" url="/movies" />
@@ -269,9 +211,7 @@ class PostAMovie extends Component {
           style={{
             overflow: "scroll",
             position: "relative",
-            // top: "2vh",
             height: "82vh"
-            // paddingBottom: "8%"
           }}
         >
           <div
@@ -328,128 +268,10 @@ class PostAMovie extends Component {
           ) : (
             ""
           )}
-          {this.state.showTicket ? (
-            <PostMovieTicket
-              handleCinemaChange={this.handleCinemaChange}
-              handleMovieChange={this.handleMovieChange}
-              handleDateChange={this.handleDateChange}
-              handleTimeChange={this.handleTimeChange}
-              handleSubmit={this.handleSubmit}
-              handleChange={this.handleChange}
-              selectedFilm={this.state.selectedFilm}
-            />
-          ) : (
-            ""
-          )}
         </div>
       </div>
     );
   }
 }
-/**
 
-{this.state.odeonClicked ? <OdeonListings listings={this.state.odeon} onShowingClick={this.onShowingClick} /> : ""}
-{this.state.cineworldClicked ? <CineworldListings listings={this.state.cineworld} onShowingClick={this.onShowingClick}/> : ""}
-
-
-// this.setState((prevState) => ({
-//   odeon: [...prevState.odeon],
-//   odeonClicked: false,
-//   cineworld: cineworldCount === 1 ? [...prevState.cineworld, ...this.props.listings[8672]] : [...prevState.cineworld],
-//   cineworldClicked: !prevState.cineworldClicked,
-//   showTicket: prevState.showTicket,
-//   selectedFilm: {...prevState.selectedFilm}
-// }))
-
-// this.setState((prevState) => ({
-//   odeon: odeonCount === 1 ? [...prevState.odeon, ...this.props.listings[9688]] : [...prevState.odeon],
-//   odeonClicked: !prevState.odeonClicked,
-//   cineworld: [...prevState.cineworld],
-//   cineworldClicked: false,
-//   showTicket: prevState.showTicket,
-//   selectedFilm: {...prevState.selectedFilm}
-// }))
-
-let resetState = new Promise((resolve,reject) => {
-  if(odeonCount > 1) {
-    resolve(this.state.today ? this.onTodayClick() : this.onTomorrowClick())
-  }
-})
-resetState.then(
-  this.setState({
-    listings: cineworldCount === 1 ? [...this.state.listings[8672]] : [...this.state.listings],
-    seeListings: true
-  })
-)
-
-onOdeonClick(){
-  odeonCount++;
-  console.log("odeon is clicked");
-  if(this.state.today && cineworldCount > 1){
-    this.onTodayClick( () => {
-      this.setState({
-        listings: odeonCount === 1 ? [...this.state.listings[9688]] : [...this.state.listings],
-        seeListings: true
-      })
-    }
-    )
-  }
-  this.onTomorrowClick( () => {
-    this.setState({
-      listings: odeonCount === 1 ? [...this.state.listings[9688]] : [...this.state.listings],
-      seeListings: true
-    })
-  })
-}
-
-onCineworldClick(){
-  cineworldCount++;
-  console.log("cineworld is clicked")
-  if(this.state.today){
-    this.onTodayClick( () => {
-      this.setState({
-        listings: cineworldCount === 1 ? [...this.state.listings[8672]] : [...this.state.listings],
-        seeListings: true
-      })
-    }
-    )
-  }
-  this.onTomorrowClick( () => {
-      this.setState({
-        listings: cineworldCount === 1 ? [...this.state.listings[8672]] : [...this.state.listings],
-        seeListings: true
-      })
-    }
-    )
-}
-
-onCineworldClick(){
-  cineworldCount++;
-  console.log("cineworld is clicked")
-  if(this.state.today) {
-    this.setState({
-      listings: this.props.listings[0]
-    },
-    () => {
-    this.setState({
-      listings: cineworldCount === 1 ? [...this.state.listings[8672]] : [...this.state.listings],
-      seeListings: true
-    })
-  }
-  )
-  }
-  this.setState({
-    listings: this.props.listings[1]
-  }, () => {
-
-  this.setState({
-    listings: cineworldCount === 1 ? [...this.state.listings[8672]] : [...this.state.listings],
-    seeListings: true
-  })
-  }
-  )
-}
-
-
-**/
 export default PostAMovie;
