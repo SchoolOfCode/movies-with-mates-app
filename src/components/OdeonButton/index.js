@@ -9,8 +9,6 @@ const OdeonButton = props => {
       background: "#e03c3c",
       color: "white",
       width: "35%",
-      // marginTop: 40,
-      // marginBottom: "20px",
       position: "relative"
     },
     activeStyle: {

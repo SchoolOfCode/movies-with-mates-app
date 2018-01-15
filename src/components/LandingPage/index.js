@@ -33,14 +33,14 @@ const LandingPage = props => {
         <div className="mwmLogo">
           <img
             src={"/ticket-v5.svg"}
-            style={{zIndex: "10", position: "relative", top: "13vh", left:"23%",height: "50%", width: "50%", transform:"rotate(-45deg)"}}
+            style={{zIndex: "1", position: "relative", top: "13vh", left:"23%",height: "50%", width: "50%", transform:"rotate(-45deg)"}}
           />
           <img
             src={"/ticket-v6.svg"}
-            style={{zIndex:"20", position: "relative", top: "18vh", left:"-23%", height: "50%", width: "50%"}}
+            style={{zIndex:"2", position: "relative", top: "18vh", left:"-23%", height: "50%", width: "50%"}}
           />
         </div>
-        <div>
+        <div style={{zIndex: "2"}}>
           <p style= {{color: "white", position: "absolute", top: "129px", left: "112px", fontSize: "5.75em", zIndex:"25"}}>M W M</p>
         </div>
         <div className="tagLine">

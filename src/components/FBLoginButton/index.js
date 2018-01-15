@@ -1,16 +1,11 @@
 import React from "react";
-import { FacebookLoginButton } from "react-social-login-buttons";
-import { LinkContainer } from "react-router-bootstrap";
 import FacebookLogin from "react-facebook-login";
-import SocialLoginButton from "react-social-login-buttons/lib/buttons/SocialLoginButton";
 
-import history from "../../index.js";
 import "./index.css";
 
 var localStorage = require("localStorage");
 
 const responseFacebook = response => {
-  console.log("response", response);
   fetch("/api/fb", {
     headers: {
       "Content-Type": "application/json"
@@ -18,7 +13,9 @@ const responseFacebook = response => {
     method: "POST",
     body: JSON.stringify({
       name: response.name,
-      local: {},
+      local: {
+        email: response.email
+      },
       tokens: {
         accessToken: response.accessToken
       },
@@ -31,36 +28,31 @@ const responseFacebook = response => {
   })
     .then(res => res.json())
     .then(data => {
-      console.log("get back from post request", data);
-      let fbAccessToken = data.userAccessToken;
-      let fbId = data.fbId;
-      let picture = data.picture;
-      let userId = data.userId;
-      let displayName = data.displayName;
+      let { fbAccessToken, fbId, picture, userId, displayName, email } = data;
       localStorage.setItem("accessToken", fbAccessToken);
       localStorage.setItem("fbId", fbId);
       localStorage.setItem("picture", picture);
       localStorage.setItem("userId", userId);
       localStorage.setItem("displayName", displayName);
+      localStorage.setItem("email", email);
     })
     .then(() => {
-      // history.push("/profile");
       window.location.replace("/profile");
     })
     .catch(err => console.log(err));
 };
 
 const FBLoginButton = props => (
-      <div>
-        <FacebookLogin
-          appId="192854244610400"
-          autoLoad={false}
-          fields="name,email,picture"
-          callback={responseFacebook}
-          textButton="Login with Facebook"
-          cssClass="fbLoginButton"
-        />
-      </div>
-    );
+  <div>
+    <FacebookLogin
+      appId="192854244610400"
+      autoLoad={false}
+      fields="name,email,picture"
+      callback={responseFacebook}
+      textButton="Login with Facebook"
+      cssClass="fbLoginButton"
+    />
+  </div>
+);
 
 export default FBLoginButton;

@@ -7,10 +7,8 @@ import LocalLogin from "../LocalLogin";
 import UserProfile from "../UserProfile";
 import MoviePage from "../MoviePage";
 import PostAMovie from "../PostAMovie";
-import ShowComment from "../ShowComment";
 import ActivityPage from "../ActivityPage";
 import GoingPage from "../GoingPage";
-
 import NavBar from "../NavBar";
 
 import "./App.css";
@@ -44,7 +42,6 @@ class App extends Component {
           listings: { ...prevState.listings, ...all }
         }));
       })
-      .then(() => console.log("this.state.listings: ", this.state.listings))
       .catch(err => console.log(err));
   };
 
@@ -73,7 +70,6 @@ class App extends Component {
     ]);
   }
   render() {
-    console.log("app props", this.props);
     return (
       <div
         className="App"
