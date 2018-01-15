@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import "./tagline.css";
+import './tagline.css';
 
 let randomWords = [
   "Marvel",
@@ -47,6 +47,7 @@ class TagLine extends Component {
         </h2>
         <h4
           style={{
+
             position: "relative",
             top: "-3.8vh",
             fontSize: "1.1em",
