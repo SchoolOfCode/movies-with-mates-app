@@ -51,7 +51,7 @@ class PostAMovie extends Component {
     fetch("/api/movies", {
       headers: {
         "Content-Type": "application/json",
-        "email": localStorage.getItem("email")
+        email: localStorage.getItem("email")
       },
       method: "POST",
       body: JSON.stringify({
@@ -163,29 +163,31 @@ class PostAMovie extends Component {
         time: showing
       }
     });
-    localStorage.setItem("odeon", this.state.odeonClicked)
+    localStorage.setItem("odeon", this.state.odeonClicked);
   }
-  handleBackClick(){
+  handleBackClick() {
     this.setState({
       showTicket: false
-    })
+    });
   }
 
-
   render() {
-    if(this.state.showTicket){
+    if (this.state.showTicket) {
       return (
         <div style={{ paddingBottom: "2%", paddingTop: "14%" }}>
-        <BackButton onClick={this.handleBackClick} style={{
-          height: "25px",
-          width: "25px",
-          position: "absolute",
-          top: "15px",
-          left: "20px",
-          zIndex: "101"
-        }}
-        history={this.props.history}
-        handleClick={this.handleBackClick}/>
+          <BackButton
+            onClick={this.handleBackClick}
+            style={{
+              height: "25px",
+              width: "25px",
+              position: "absolute",
+              top: "15px",
+              left: "20px",
+              zIndex: "101"
+            }}
+            history={this.props.history}
+            handleClick={this.handleBackClick}
+          />
           <AppBar title="Post a Movie" url="/movies" />
           <PostMovieTicket
             handleCinemaChange={this.handleCinemaChange}
@@ -197,8 +199,7 @@ class PostAMovie extends Component {
             selectedFilm={this.state.selectedFilm}
           />
         </div>
-    )
-
+      );
     }
     return (
       <div style={{ paddingBottom: "2%", paddingTop: "14%" }}>
@@ -210,7 +211,8 @@ class PostAMovie extends Component {
             height: "82vh"
           }}
         >
-          <div className="postMovieSummary"
+          <div
+            className="postMovieSummary"
             style={{
               position: "relative",
               height: "32vh",
@@ -218,16 +220,32 @@ class PostAMovie extends Component {
               paddingTop: "12%",
               paddingBottom: "12%",
               backgroundColor: "rgb(252, 252, 252)"
-            }}>
-              <h1 style={{textAlign: "center", fontSize: "3.5em"}}> Start a Movie Event </h1>
-              <h5 style={{textAlign: "center", margin: 0, fontSize:"1.5em"}}> Meet with like-minded people and enjoy </h5>
-              <h5 style={{textAlign: "center", margin: 0}}> a movie together </h5>
+            }}
+          >
+            <h1 style={{ textAlign: "center", fontSize: "3.5em" }}>
+              {" "}
+              Start a Movie Event{" "}
+            </h1>
+            <h5 style={{ textAlign: "center", margin: 0, fontSize: "1.5em" }}>
+              {" "}
+              Meet with like-minded people and enjoy{" "}
+            </h5>
+            <h5 style={{ textAlign: "center", margin: 0 }}>
+              {" "}
+              a movie together{" "}
+            </h5>
           </div>
           <TodayTomorrowContainer
             today={this.onTodayClick}
             tomorrow={this.onTomorrowClick}
           />
-          <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center"
+            }}
+          >
             {this.state.seeCinemas ? (
               <OdeonButton onClick={this.onOdeonClick} />
             ) : (

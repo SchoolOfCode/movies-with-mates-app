@@ -145,13 +145,6 @@ router.post("/:id/join", (req, res, next) => {
     }
     movie.members.push(createAttendee(user));
     movie.save((err, movie) => {
-      sendEmail({
-        to: req.headers.email,
-        subject: "New MWM notification",
-        text: `You are going to see the following movie: ${
-          movie.movie
-        } !`
-      });
       return res.json({ payload: movie });
     });
   });
