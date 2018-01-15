@@ -28,10 +28,11 @@ class GoingPage extends Component {
     if (this.state.error) {
       return (
         <div style={{position: "fixed", backgroundColor: "white", zIndex: "1000", height: "100vh", width: "100vw"}}>
-          <h2 style={{ margin: 0, fontFamily:"Ubuntu", position:"relative", top:"175px" }}>Aw, shucks.</h2>
-          <h2 style={{ margin: 0, fontFamily:"Ubuntu", position:"relative", top:"175px" }}>We're experiencing some technical difficulties</h2>
-          <h1 style={{ margin: 0, fontFamily:"Ubuntu", position:"relative", top:"175px", fontSize: "10em", marginTop:"10vh"}}> :( </h1>
-          <Return />
+        <h2 style={{ margin: 0, fontFamily:"Ubuntu", position:"relative", top:"125px" }}>Aw, shucks.</h2>
+        <h2 style={{ margin: 0, fontFamily:"Ubuntu", position:"relative", top:"125px" }}>We're experiencing some technical difficulties</h2>
+        <h1 style={{ margin: 0, fontFamily:"Ubuntu", position:"relative", top:"125px", fontSize: "10em", marginTop:"10vh"}}> :( </h1>
+        <h4 style={{ margin: 0, fontFamily:"Ubuntu", position:"relative", top:"175px", fontSize: "2em", marginTop:"10vh"}}><span style={{fontStyle: "italic"}}>"I'll be back"</span> - The Terminator</h4>
+        <Return />
         </div>
       )
     }
