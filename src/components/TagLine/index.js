@@ -1,28 +1,28 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 import './tagline.css';
 
 let randomWords = [
-  "Marvel",
-  "Mates",
-  "Minions",
-  "Magic",
-  "Monsters",
-  "Magnificence",
-  "Meditation",
-  "Mesmerize",
-  "Mouthwatering",
-  "Mm-Hmm",
-  "My Gosh",
-  "My Word",
-  "Mutuality"
+  'Marvel',
+  'Mates',
+  'Minions',
+  'Magic',
+  'Monsters',
+  'Magnificence',
+  'Meditation',
+  'Mesmerize',
+  'Mouthwatering',
+  'Mm-Hmm',
+  'My Gosh',
+  'My Word',
+  'Mutuality'
 ];
 
 class TagLine extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      word: "Marvel"
+      word: 'Marvel'
     };
   }
 
@@ -42,25 +42,24 @@ class TagLine extends Component {
   render() {
     return (
       <div>
-        <h2 style={{ position: "relative", top: "-3vh", fontSize: "2em" }}>
+        <h2 style={{ position: 'relative', top: '-3vh', fontSize: '2em' }}>
           Movies With Mates
         </h2>
         <h4
           style={{
-
-            position: "relative",
-            top: "-3.8vh",
-            fontSize: "1.1em",
-            color: "rgb(119,119,119)"
+            position: 'relative',
+            top: '-3.8vh',
+            fontSize: '1.1em',
+            color: 'rgb(119,119,119)'
           }}
         >
-          Meet, Watch,{" "}
+          Meet, Watch,{' '}
           <span
             className="lastWord"
             style={{
-              color: "#BE3438",
-              fontSize: "1.5em",
-              fontFamily: "Gloria Hallelujah"
+              color: '#BE3438',
+              fontSize: '1.5em',
+              fontFamily: 'Gloria Hallelujah'
             }}
           >
             {this.state.word}
